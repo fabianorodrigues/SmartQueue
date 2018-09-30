@@ -39,11 +39,6 @@ namespace SmartQueue.UI.Page
             activityIndicator.IsVisible = !activityIndicator.IsVisible;
         }
 
-        private void listaRanking_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            listaRanking.SelectedItem = null;
-        }
-
         private async void listaRanking_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             await Navigation.PushAsync(new SobreProduto((e.Item as Produto).Id));

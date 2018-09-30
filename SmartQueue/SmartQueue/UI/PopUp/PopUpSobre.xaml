@@ -18,16 +18,17 @@
     </pages:PopupPage.Animation>
 
     <pages:PopupPage.Content>
-        <StackLayout Margin="40" Padding="5">
+        <StackLayout Margin="40" Padding="5" Spacing="10">
+            
             <Label Text="SmartQueue" TextColor="#F2F2F2" 
                    FontAttributes="Bold" FontSize="Large" 
                    VerticalOptions="Center" 
                    HorizontalOptions="Center" />
 
             <Label Text="Aplicativo criado para gerenciar filas de atendimento, controle de fluxo de clientes e agilizar a forma de fazer seus pedidos em restaurantes para jantares casuais."
-                   FontSize="Medium" TextColor="#F2F2F2"/>
-
-            <Label Text="Autores:"/>
+                   FontSize="Large" TextColor="#F2F2F2"/>
+        
+            <Label Text="Autores:" TextColor="#F2F2F2" FontSize="Medium"/>
 
             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                 <Label Text="Fabiano de Oliveira Rodrigues" TextColor="#F2F2F2"/>
@@ -40,6 +41,12 @@
                    TextColor="#BFBFBF" 
                    FontAttributes="Bold" 
                    VerticalOptions="Center" HorizontalOptions="Center" />
+
+            <Button Text="Voltar" Clicked="Voltar_Clicked"
+                    TextColor="#F2F2F2" 
+                    BorderWidth ="1" BorderRadius="30" BorderColor="#F2F2F2"
+                    BackgroundColor="#C0120A"/>
+            
         </StackLayout>
     </pages:PopupPage.Content>
     

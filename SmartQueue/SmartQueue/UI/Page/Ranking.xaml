@@ -11,7 +11,7 @@
                 IsVisible="True">
             </ActivityIndicator>
         
-            <ListView x:Name="listaRanking" ItemTapped="listaRanking_ItemTapped" ItemSelected="listaRanking_ItemSelected">
+            <ListView x:Name="listaRanking" ItemTapped="listaRanking_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ImageCell ImageSource="logo.png" 

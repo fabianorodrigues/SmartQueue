@@ -1,4 +1,5 @@
-﻿using Rg.Plugins.Popup.Services;
+﻿using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
 using SmartQueue.UI.Page;
 using SmartQueue.UI.PopUp;
 using System;
@@ -38,22 +39,24 @@ namespace SmartQueue.UI.Master
         private async void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var item = (MasterPageItem)e.SelectedItem;
+
+            if (item.TargetType == typeof(SolicitarMesa)) return;
+
             Type page = item.TargetType;
 
             if(item.TargetType == typeof(PopUpSobre))
-            {
-                await PopupNavigation.Instance.PushAsync(new PopUpSobre());
-                IsPresented = false;
-                return;
-            }
-                
-            await Detail.Navigation.PushAsync((Xamarin.Forms.Page)Activator.CreateInstance(page));
+                await PopupNavigation.Instance.PushAsync((PopupPage)Activator.CreateInstance(page));
+            else if(item.TargetType != typeof(SolicitarMesa))
+                await Detail.Navigation.PushAsync((Xamarin.Forms.Page)Activator.CreateInstance(page));
 
             IsPresented = false;
+            listViewMenu.SelectedItem = listaMenu[0];
         }
 
         protected override bool OnBackButtonPressed()
         {
+            if (Detail.Navigation.NavigationStack.Count > 0) base.OnBackButtonPressed();
+
             return true;
         }
     }
