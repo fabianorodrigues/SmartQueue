@@ -1,27 +1,27 @@
-﻿using SmartQueue.Controller;
+﻿using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
+using SmartQueue.Controller;
 using SmartQueue.Utils;
 using System;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SmartQueue.UI.Page
+namespace SmartQueue.UI.PopUp
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AlterarSenha : ContentPage
+	public partial class PopUpAlterarSenha : PopupPage
 	{
         private UsuarioController controller;
-
-		public AlterarSenha ()
+        public PopUpAlterarSenha ()
 		{
 			InitializeComponent ();
             controller = new UsuarioController();
-		}
+        }
 
         public async Task<bool> Validacao()
         {
-            if(txtSenhaAtual.Text.Length < 6)
+            if (txtSenhaAtual.Text.Length < 6)
             {
                 await DisplayAlert("Senha atual inválida", "A senha digitada não corresponde a senha cadastrada.", "Ok");
                 return false;
@@ -63,7 +63,7 @@ namespace SmartQueue.UI.Page
             }
         }
 
-        private async void Button_Clicked(object sender, EventArgs e)
+        private async void Salvar_Clicked(object sender, EventArgs e)
         {
             if (await Validacao())
                 Salvar();
@@ -71,13 +71,18 @@ namespace SmartQueue.UI.Page
 
         private void txt_Focused(object sender, FocusEventArgs e)
         {
-            Aplicacao.MostrarLabel(true, (Entry)sender);
+            Aplicacao.MostrarLabel(true, (CustomEntry)sender);
         }
 
         private void txt_Unfocused(object sender, FocusEventArgs e)
         {
-            if (((Entry)sender).Text == string.Empty || ((Entry)sender).Text == null)
-                Aplicacao.MostrarLabel(false, (Entry)sender);
+            if (((CustomEntry)sender).Text == string.Empty || ((CustomEntry)sender).Text == null)
+                Aplicacao.MostrarLabel(false, (CustomEntry)sender);
+        }
+
+        private async void Cancelar_Clicked(object sender, System.EventArgs e)
+        {
+            await PopupNavigation.Instance.PopAsync(true);
         }
     }
 }

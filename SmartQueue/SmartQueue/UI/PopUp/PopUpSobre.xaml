@@ -19,14 +19,16 @@
 
     <pages:PopupPage.Content>
         <StackLayout Margin="40" Padding="5" Spacing="10">
-            
-            <Label Text="SmartQueue" TextColor="#F2F2F2" 
-                   FontAttributes="Bold" FontSize="Large" 
-                   VerticalOptions="Center" 
-                   HorizontalOptions="Center" />
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Image Source="icone_sobre.png" VerticalOptions="Center"/>
+                <Label Text="SmartQueue" 
+                   TextColor ="#F2F2F2" FontAttributes="Bold" FontSize="Large"/>
+            </StackLayout>
 
             <Label Text="Aplicativo criado para gerenciar filas de atendimento, controle de fluxo de clientes e agilizar a forma de fazer seus pedidos em restaurantes para jantares casuais."
-                   FontSize="Large" TextColor="#F2F2F2"/>
+                   FontSize="Large" TextColor="#F2F2F2"
+                   Margin="0,5,0,5" HorizontalOptions="Center"/>
         
             <Label Text="Autores:" TextColor="#F2F2F2" FontSize="Medium"/>
 

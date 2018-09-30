@@ -31,9 +31,9 @@ namespace SmartQueue.UI.Page
             }
         }
 
-        public async void AlterarSenha()
+        public void AlterarSenha()
         {
-            await Navigation.PushAsync(new AlterarSenha());
+            //await Navigation.PushAsync(new AlterarSenha());
         }
 
         public async void Sobre()

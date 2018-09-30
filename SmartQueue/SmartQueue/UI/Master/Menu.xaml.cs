@@ -26,7 +26,7 @@ namespace SmartQueue.UI.Master
             listaMenu.Add(new MasterPageItem() { Titulo = "Meu Histórico", Icone = "icone_historico.png", TargetType = typeof(HistoricoReserva) });
             listaMenu.Add(new MasterPageItem() { Titulo = "Cardápio", Icone = "icone_cardapio.png", TargetType = typeof(Cardapio) });
             listaMenu.Add(new MasterPageItem() { Titulo = "Ranking", Icone = "icone_ranking.png", TargetType = typeof(Ranking) });
-            listaMenu.Add(new MasterPageItem() { Titulo = "Alterar Senha", Icone = "icone_senha.png", TargetType = typeof(AlterarSenha) });
+            listaMenu.Add(new MasterPageItem() { Titulo = "Alterar Senha", Icone = "icone_senha.png", TargetType = typeof(PopUpAlterarSenha) });
             listaMenu.Add(new MasterPageItem() { Titulo = "Sobre o App", Icone = "icone_sobre.png", TargetType = typeof(PopUpSobre) });
             listaMenu.Add(new MasterPageItem() { Titulo = "Sair", Icone = "icone_logout.png", TargetType = typeof(Conta) });
 
@@ -44,7 +44,7 @@ namespace SmartQueue.UI.Master
 
             Type page = item.TargetType;
 
-            if(item.TargetType == typeof(PopUpSobre))
+            if(item.TargetType == typeof(PopUpSobre) || item.TargetType == typeof(PopUpAlterarSenha))
                 await PopupNavigation.Instance.PushAsync((PopupPage)Activator.CreateInstance(page));
             else if(item.TargetType != typeof(SolicitarMesa))
                 await Detail.Navigation.PushAsync((Xamarin.Forms.Page)Activator.CreateInstance(page));
