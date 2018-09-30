@@ -19,11 +19,14 @@ namespace SmartQueue.UI.Master
 
             listaMenu = new List<MasterPageItem>();
 
-            listaMenu.Add(new MasterPageItem() { Titulo = "Solicitar Mesa", Icone = "logo.png", TargetType = typeof(SolicitarMesa) });
-            listaMenu.Add(new MasterPageItem() { Titulo = "Meu Histórico", Icone = "logo.png", TargetType = typeof(HistoricoReserva) });
-            listaMenu.Add(new MasterPageItem() { Titulo = "Cardápio", Icone = "logo.png", TargetType = typeof(Cardapio) });
-            listaMenu.Add(new MasterPageItem() { Titulo = "Ranking", Icone = "logo.png", TargetType = typeof(Ranking) });
-            
+            listaMenu.Add(new MasterPageItem() { Titulo = "Solicitar Mesa", Icone = "icone_mesa.png", TargetType = typeof(SolicitarMesa) });
+            listaMenu.Add(new MasterPageItem() { Titulo = "Meu Histórico", Icone = "icone_historico.png", TargetType = typeof(HistoricoReserva) });
+            listaMenu.Add(new MasterPageItem() { Titulo = "Cardápio", Icone = "icone_cardapio.png", TargetType = typeof(Cardapio) });
+            listaMenu.Add(new MasterPageItem() { Titulo = "Ranking", Icone = "icone_ranking.png", TargetType = typeof(Ranking) });
+            listaMenu.Add(new MasterPageItem() { Titulo = "Alterar Senha", Icone = "icone_senha.png", TargetType = typeof(AlterarSenha) });
+            listaMenu.Add(new MasterPageItem() { Titulo = "Sobre o App", Icone = "icone_sobre.png", TargetType = typeof(Sobre) });
+            listaMenu.Add(new MasterPageItem() { Titulo = "Sair", Icone = "icone_logout.png", TargetType = typeof(Conta) });
+
 
             listViewMenu.ItemsSource = listaMenu;
 

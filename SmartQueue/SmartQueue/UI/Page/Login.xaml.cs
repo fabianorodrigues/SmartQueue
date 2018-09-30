@@ -26,8 +26,6 @@ namespace SmartQueue.UI.Page
         {
             activityIndicator.IsRunning = !activityIndicator.IsRunning;
             activityIndicator.IsVisible = !activityIndicator.IsVisible;
-
-            Aplicacao.DesabilitarCampos(activityIndicator.IsRunning, (StackLayout)activityIndicator.Parent);
         }
 
         private async Task<bool> Validacao()
@@ -73,18 +71,30 @@ namespace SmartQueue.UI.Page
 
         private async void Entrar_Clicked(object sender, EventArgs e)
         {
+            ((Button)sender).IsEnabled = false;
+            
             if (await Validacao())
                 Entrar();
+
+            ((Button)sender).IsEnabled = true;
         }
 
         private async void Cadastrar_Clicked(object sender, EventArgs e)
         {
+            ((Button)sender).IsEnabled = false;
+
             await Navigation.PushAsync(new Cadastro());
+
+            ((Button)sender).IsEnabled = true;
         }
 
         private async void RedefinirSenha_Clicked(object sender, EventArgs e)
         {
+            ((Button)sender).IsEnabled = false;
+
             await PopupNavigation.Instance.PushAsync(new PopUpRecuperarSenha());
+
+            ((Button)sender).IsEnabled = true;
         }
 
     }
