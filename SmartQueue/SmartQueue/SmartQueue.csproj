@@ -65,5 +65,8 @@
     <EmbeddedResource Update="UI\PopUp\PopUpRecuperarSenha.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="UI\PopUp\PopUpSobre.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
