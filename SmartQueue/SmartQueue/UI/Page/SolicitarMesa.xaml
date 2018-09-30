@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartQueue.UI.Page.SolicitarMesa"
+             Title="Solicitar Mesa">
+    <ContentPage.Content>
+        <StackLayout Margin="30,90,30,30" Padding="20" Spacing="50">
+            <Label Text="Quantidade de Assento(s)" FontSize="Large" TextColor="Black" HorizontalOptions="Center"/>
+            <Label x:Name="lblQtdAssentos"
+                        Text="0" TextColor="Black" FontSize="Large"
+                        HorizontalOptions="Center" />
+            <Stepper x:Name="stepperQtdAssentos"
+                            Value="0" Minimum="0" Maximum="4" Increment="1"  
+                            ValueChanged="Stepper_ValueChanged"
+                            HorizontalOptions="Center"/>
+            <Button Text="Solicitar" 
+                    HorizontalOptions="Center" 
+                    BorderRadius="10" 
+                    Clicked="Button_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

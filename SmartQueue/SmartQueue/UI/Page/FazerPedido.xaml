@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton"
+             x:Class="SmartQueue.UI.Page.FazerPedido">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Priority="0" Order="Primary" Icon="plus.png"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <RelativeLayout Margin="10">
+            
+            <ContentView 
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"  
+                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
+                
+                
+
+            </ContentView>
+            
+            <controls:FloatingActionButton x:Name="FAB" 
+                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
+                Image="plus.png" ButtonColor="#03A9F4"                                    
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-75}"  
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-75}" />
+            
+        </RelativeLayout>
+    </ContentPage.Content>
+</ContentPage>

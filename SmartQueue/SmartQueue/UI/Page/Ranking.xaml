@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartQueue.UI.Page.Ranking"
+             Title="Ranking">
+    <ContentPage.Content>
+        <StackLayout Margin="25">
+            <ActivityIndicator
+                x:Name="activityIndicator"
+                IsRunning="True"
+                IsVisible="True">
+            </ActivityIndicator>
+        
+            <ListView x:Name="listaRanking" ItemTapped="listaRanking_ItemTapped" ItemSelected="listaRanking_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ImageCell ImageSource="logo.png" 
+                                   Text="{Binding Nome}" 
+                                   Detail="{Binding Valor,  StringFormat=' {0:c}'}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

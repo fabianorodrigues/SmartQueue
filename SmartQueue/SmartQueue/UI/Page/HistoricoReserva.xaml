@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartQueue.UI.Page.HistoricoReserva"
+             Title="Histórico"
+             Padding="10, 0">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+
+            <ActivityIndicator
+                x:Name="activityIndicator"
+                IsRunning="False"
+                IsVisible="False"
+                HorizontalOptions="Center" VerticalOptions="Center">
+            </ActivityIndicator>
+
+            <ListView x:Name="listaHistorico"
+                      SeparatorVisibility="None" 
+                      ItemSelected="listaHistorico_ItemSelected"
+                      RowHeight="100">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ContentView Padding="5">
+                                <Frame OutlineColor="Accent"
+                               Padding="10">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="icone_calendario_256x256.png" HeightRequest="80" VerticalOptions="CenterAndExpand"/>
+                                        <StackLayout Orientation="Vertical">
+                                            <Label Text="{Binding DataReserva}" FontAttributes="Bold" FontSize="Medium"/>
+                                            <Label Text="{Binding Mesa}"/>
+                                            <Label Text="{Binding Valor, StringFormat=' {0:c}'}"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </ContentView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

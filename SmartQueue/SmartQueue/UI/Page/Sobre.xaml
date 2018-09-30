@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartQueue.UI.Page.Sobre"
+             Title="Sobre">
+    <ContentPage.Content>
+        <StackLayout Margin="40" Padding="5">
+            <Label Text="SmartQueue" TextColor="#B80F0A" 
+                   FontAttributes="Bold" FontSize="Large" 
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center" />
+            
+            <Label Text="Aplicativo criado para gerenciar filas de atendimento, controle de fluxo de clientes e agilizar a forma de fazer seus pedidos em restaurantes para jantares casuais."
+                   FontSize="Medium"/>
+
+            <Label Text="Autores:"/>
+
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="Fabiano de Oliveira Rodrigues"/>
+                <Label Text="Jefferson Ferreira Valdevino"/>
+                <Label Text="João Victor Teixeira"/>
+                <Label Text="Rodrigo Bueno de Paiva"/>
+            </StackLayout>
+
+            <Label Text="Versão: 1.0.0" 
+                   TextColor="Black" 
+                   FontAttributes="Bold" 
+                   VerticalOptions="Center" HorizontalOptions="Center" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

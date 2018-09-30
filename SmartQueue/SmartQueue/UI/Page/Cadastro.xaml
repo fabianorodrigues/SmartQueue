@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartQueue.UI.Page.Cadastro"
+             Title="Cadastro">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="20" Spacing="5">
+            
+                <ActivityIndicator 
+                    x:Name="activityIndicator"
+                    IsVisible="False"
+                    IsRunning="False"/>
+
+                <Label Text="Nome" IsVisible="False" Margin="5,0,0,0"/>
+                <Entry Placeholder="Nome" x:Name="txtNome" 
+                       Focused="txt_Focused" 
+                       Unfocused="txt_Unfocused"/>
+
+                <Label Text="Sobrenome" IsVisible="False" Margin="5,0,0,0"/>
+                <Entry Placeholder="Sobrenome" x:Name="txtSobrenome" 
+                       Focused="txt_Focused" 
+                       Unfocused="txt_Unfocused"/>
+
+                <Label Text="Data de Nascimento"/>
+                <DatePicker x:Name="dtNascimento" />
+
+                <Label Text="CPF" IsVisible="False" Margin="5,0,0,0"/>
+                <Entry Placeholder="CPF" x:Name="txtCpf" 
+                       Keyboard="Numeric" MaxLength="11" 
+                       Focused="txt_Focused" 
+                       Unfocused="txt_Unfocused"/>
+
+                <Label Text="E-mail" IsVisible="False" Margin="5,0,0,0"/>
+                <Entry Placeholder="E-mail" x:Name="txtEmail"
+                       Keyboard="Email"
+                       Focused="txt_Focused" 
+                       Unfocused="txt_Unfocused"/>
+
+                <Label Text="Cidade Natal (Opcional)" IsVisible="False" Margin="5,0,0,0"/>
+                <Entry Placeholder="Cidade Natal (Opcional)" x:Name="txtCidade"
+                       Focused="txt_Focused" 
+                       Unfocused="txt_Unfocused"/>
+
+                <Label Text="Senha" IsVisible="False" Margin="5,0,0,0"/>
+                <Entry Placeholder="Senha" x:Name="txtSenha"
+                       IsPassword="True"
+                       Focused="txt_Focused" 
+                       Unfocused="txt_Unfocused"/>
+
+                <Label Text="Confirmar Senha" IsVisible="False" Margin="5,0,0,0"/>
+                <Entry Placeholder="Confirmar Senha" x:Name="txtConfirmarSenha"
+                       IsPassword="True"
+                       Focused="txt_Focused" 
+                       Unfocused="txt_Unfocused"/>
+
+                <Button Text="Cadastrar" Clicked="Cadastrar_Clicked"/>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

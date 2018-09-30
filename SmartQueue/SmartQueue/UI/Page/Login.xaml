@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartQueue.UI.Page.Login"
+             xmlns:controls="clr-namespace:SmartQueue.UI"
+             BackgroundColor="#AA0E09">
+    <ContentPage.Content>
+        <ScrollView>
+            
+            <StackLayout Padding="10" Spacing="5" Margin="20">
+                <Image Source="logo.png" HeightRequest="250" VerticalOptions="EndAndExpand"/>
+                
+                <ActivityIndicator
+                x:Name="activityIndicator"
+                IsRunning="False"
+                IsVisible="False"
+                HorizontalOptions="Center" VerticalOptions="Center"
+                Color="#F2F2F2">
+                </ActivityIndicator>
+
+                <StackLayout HorizontalOptions="Center">
+                    <StackLayout Orientation="Horizontal">
+                        <Image Source="icone_email.png" VerticalOptions="Center"/>
+                        <controls:CustomEntry x:Name="txtEmail" 
+                                      Placeholder="E-mail" PlaceholderColor="#BFBFBF"
+                                      TextColor ="#F2F2F2"
+                                      WidthRequest="250"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Image Source="icone_senha.png" VerticalOptions="Center"/>
+                        <controls:CustomEntry x:Name="txtSenha" 
+                                      Placeholder="Senha" PlaceholderColor="#BFBFBF"
+                                      IsPassword="True" TextColor ="#F2F2F2"
+                                      WidthRequest="250"/>
+                    </StackLayout>
+                </StackLayout>
+                 
+                
+                <Button Text="Entrar" Clicked="Entrar_Clicked" 
+                    TextColor="#F2F2F2" 
+                    BorderWidth ="1" BorderRadius="30" BorderColor="#F2F2F2"
+                    BackgroundColor="#C0120A"/>
+
+                <Button Text="Esqueceu a senha?" Clicked="RedefinirSenha_Clicked" 
+                        HorizontalOptions="Center" VerticalOptions="Center" 
+                        FontAttributes="Italic"
+                        BorderColor="#AA0E09"
+                        BackgroundColor="Transparent"/>
+                
+                <Button Text="Cadastrar" Clicked="Cadastrar_Clicked"
+                    TextColor="#F2F2F2" 
+                    BorderWidth ="1" BorderRadius="30" BorderColor="#F2F2F2"
+                    BackgroundColor="#C0120A"/>
+            </StackLayout>
+            
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

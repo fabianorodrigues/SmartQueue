@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartQueue.UI.Master.Menu">
+
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu">
+
+            <ScrollView>
+                <StackLayout BackgroundColor="#AA0E09">
+
+                    <StackLayout Padding="30">
+                        <Image Source="logo_vazado.png" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </StackLayout>
+
+                    <StackLayout Spacing="10">
+                        <ListView x:Name="listViewMenu" RowHeight="60" SeparatorVisibility="None"
+                                    ItemSelected="OnMenuItemSelected">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout>
+                                            <StackLayout VerticalOptions="FillAndExpand" Orientation="Horizontal" Padding="20,10,0,10" Spacing="20">
+                                                <Image Source="{Binding Icone}" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" />
+                                                <Label Text="{Binding Titulo}" FontSize="Medium" VerticalOptions="Center" TextColor="White"/>
+                                            </StackLayout>
+                                            <BoxView HeightRequest="1" BackgroundColor="White"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+
+                </StackLayout>
+            </ScrollView>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+
+</MasterDetailPage>
