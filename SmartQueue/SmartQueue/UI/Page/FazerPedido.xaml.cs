@@ -65,7 +65,12 @@ namespace SmartQueue.UI.Page
 
         private void Stepper_ValueChanged(object sender, ValueChangedEventArgs e)
         {
+            Stepper stepper = (Stepper)sender;
+            StackLayout layout = (StackLayout)stepper.Parent;
 
+            Label labelQuantidade = (Label)layout.Children[0];
+
+            labelQuantidade.Text = stepper.Value.ToString();
         }
     }
 }

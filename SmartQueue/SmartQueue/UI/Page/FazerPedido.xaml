@@ -24,7 +24,8 @@
                       IsGroupingEnabled="True"
                       SeparatorVisibility="Default"
                       SeparatorColor="#B3B3B3"
-                      ItemTapped="listaCardapio_ItemTapped">
+                      ItemTapped="listaCardapio_ItemTapped"
+                      HasUnevenRows="True">
 
                 <ListView.GroupHeaderTemplate>
                     <DataTemplate>
@@ -42,13 +43,13 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="8,0,8,0">
-                                <StackLayout>
-                                    <Label Text="{Binding ProdutoNome}" TextColor="Black" LineBreakMode="TailTruncation" FontAttributes="None"/>
-                                    <Label Text="{Binding ProdutoValor, StringFormat=' {0:c}'}" TextColor="#B3B3B3" LineBreakMode="TailTruncation" FontAttributes="None" />
+                            <StackLayout Padding="8,0,8,0">
+                                <Label Text="{Binding ProdutoNome}" TextColor="Black" LineBreakMode="TailTruncation" FontAttributes="None"/>
+                                <Label Text="{Binding ProdutoValor, StringFormat=' {0:c}'}" TextColor="#B3B3B3" LineBreakMode="TailTruncation" FontAttributes="None" />
+                                <StackLayout Orientation="Horizontal" Spacing="5">
+                                    <Label Text="0" FontAttributes="None"/>
+                                    <Stepper Increment="1" Value="0" ValueChanged="Stepper_ValueChanged"/>
                                 </StackLayout>
-                                <Label Text="0" FontAttributes="None"/>
-                                <Stepper Increment="1" Value="0" ValueChanged="Stepper_ValueChanged"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
