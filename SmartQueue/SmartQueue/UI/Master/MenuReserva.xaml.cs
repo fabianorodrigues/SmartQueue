@@ -26,6 +26,7 @@ namespace SmartQueue.UI.Master
             listaMenu.Add(new MasterPageItem() { Titulo = "Conta", Icone = "icone_conta.png", TargetType = typeof(Conta) });
             listaMenu.Add(new MasterPageItem() { Titulo = "Meu Histórico", Icone = "icone_historico.png", TargetType = typeof(HistoricoReserva) });    
             listaMenu.Add(new MasterPageItem() { Titulo = "Ranking", Icone = "icone_ranking.png", TargetType = typeof(Ranking) });
+            listaMenu.Add(new MasterPageItem() { Titulo = "Cancelar Reserva", Icone = "icone_logout.png", TargetType = typeof(NullReferenceException) });
 
 
             listViewMenu.ItemsSource = listaMenu;

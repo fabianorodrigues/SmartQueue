@@ -55,11 +55,6 @@ namespace SmartQueue.UI.Page
                    select new Agrupar<string, ItemCardapio>(grupos.Key.ToString(), grupos);
         }
 
-        private void listaCardapio_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            listaCardapio.SelectedItem = null;
-        }
-
         private async void listaCardapio_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             await Navigation.PushAsync(new SobreProduto((e.Item as ItemCardapio).ProdutoId));

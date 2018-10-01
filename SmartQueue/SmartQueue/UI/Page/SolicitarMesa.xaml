@@ -9,7 +9,7 @@
             <Label Text="Quantidade de Assento(s)" FontSize="Large" HorizontalOptions="Center"/>
             
             <Label x:Name="lblQtdAssentos"
-                   Text="0" TextColor="#1A1A1A"
+                   Text="0"
                    FontSize="Large" FontAttributes="None"
                    Scale="2"
                    HorizontalOptions="Center" />

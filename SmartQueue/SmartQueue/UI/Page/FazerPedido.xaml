@@ -1,29 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton"
-             x:Class="SmartQueue.UI.Page.FazerPedido">
+             x:Class="SmartQueue.UI.Page.FazerPedido"
+             Title="Fazer Pedido">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Priority="0" Order="Primary" Icon="plus.png"/>
+        <ToolbarItem Priority="0" Order="Primary" Icon="icone_salvar.png"/>
     </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
-        <RelativeLayout Margin="10">
-            
-            <ContentView 
-                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"  
-                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
-                
-                
 
-            </ContentView>
-            
-            <controls:FloatingActionButton x:Name="FAB" 
-                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
-                Image="plus.png" ButtonColor="#03A9F4"                                    
-                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-75}"  
-                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-75}" />
-            
-        </RelativeLayout>
+        <StackLayout Orientation="Vertical">
+            <Entry x:Name="txtProcurar" Placeholder="Procurar..." TextChanged="Procurar_TextChanged" HorizontalOptions="FillAndExpand"/>
+
+            <ActivityIndicator
+                x:Name="activityIndicator"
+                IsRunning="True"
+                IsVisible="True"
+                HorizontalOptions="Center" VerticalOptions="Center">
+            </ActivityIndicator>
+
+            <ListView x:Name="listaCardapio" Margin="5" 
+                      IsGroupingEnabled="True"
+                      SeparatorVisibility="Default"
+                      SeparatorColor="#B3B3B3"
+                      ItemTapped="listaCardapio_ItemTapped">
+
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Margin="0,10,0,0">
+                                <Label Text="{Binding Key}"
+                                       TextColor="#C0120A"
+                                       FontSize="Large"
+                                       FontAttributes="Bold"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="8,0,8,0">
+                                <StackLayout>
+                                    <Label Text="{Binding ProdutoNome}" TextColor="Black" LineBreakMode="TailTruncation" FontAttributes="None"/>
+                                    <Label Text="{Binding ProdutoValor, StringFormat=' {0:c}'}" TextColor="#B3B3B3" LineBreakMode="TailTruncation" FontAttributes="None" />
+                                </StackLayout>
+                                <Label Text="0" FontAttributes="None"/>
+                                <Stepper Increment="1" Value="0" ValueChanged="Stepper_ValueChanged"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+
     </ContentPage.Content>
+    
 </ContentPage>
