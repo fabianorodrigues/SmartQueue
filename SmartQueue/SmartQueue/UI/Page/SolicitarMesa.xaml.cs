@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartQueue.UI.Master;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,18 @@ namespace SmartQueue.UI.Page
             InitializeComponent();
         }
 
-        private async void Button_Clicked(object sender, EventArgs e)
+        private async void Solicitar()
         {
-            await Navigation.PushAsync(new MenuReserva());
+            if (Int32.Parse(lblQtdAssentos.Text) == 0)
+                await DisplayAlert("Atenção", "Informe a quantidade de assentos", "Ok");
+            else
+                await Navigation.PushAsync(new MenuReserva());
+
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            Solicitar();
         }
 
         private void Stepper_ValueChanged(object sender, ValueChangedEventArgs e)

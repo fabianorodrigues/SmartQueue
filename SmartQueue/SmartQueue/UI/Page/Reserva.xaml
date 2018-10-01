@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartQueue.UI.Page.Reserva">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <StackLayout VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="Center" Spacing="10" Margin="30">
+
+                <Label Text="Tempo para liberação da mesa." FontSize="Medium"
+                HorizontalOptions="Center"/>
+
+                <Label x:Name="lblTempoLiberarMesa" 
+                Text="00:00:00" 
+                FontSize="Large" FontAttributes="None"
+                HorizontalOptions="Center"/>
+
+                <Button Text="Cancelar Reserva" Clicked="CancelarReserva_Clicked"/>
+
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

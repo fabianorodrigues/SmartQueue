@@ -101,8 +101,7 @@ namespace SmartQueue.Controller
             }
             catch (Exception)
             {
-                storage.Excluir();
-                return false;
+                return await Sair();
             }
             
         }
