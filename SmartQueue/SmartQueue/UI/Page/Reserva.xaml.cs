@@ -1,4 +1,6 @@
 ﻿using Plugin.LocalNotifications;
+using SmartQueue.Controller;
+using SmartQueue.DAL;
 using System;
 
 using Xamarin.Forms;
@@ -10,22 +12,28 @@ namespace SmartQueue.UI.Page
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Reserva : ContentPage
 	{
+        private ReservaController controller;
         private int segundos;
         private int minutos;
         private int horas;
         private bool reservaCancelada;
-        //private bool reservaAtivada;
 
         public Reserva ()
 		{
 			InitializeComponent();
+            controller = new ReservaController();
 
-            segundos = 30;
+            segundos = 10;
             minutos = 1;
             horas = 0;
 
             LiberarMesa();
         }
+
+        //public async void ConsultarTempo()
+        //{
+        //    lblInfoReserva.Text = await controller.ConsultarTempo();
+        //}
 
         public void LiberarMesa()
         {
@@ -39,8 +47,9 @@ namespace SmartQueue.UI.Page
                     {
                         if (horas == 0)
                         {
-                            CrossLocalNotifications.Current.Show("Teste", "Text");
-                            //reservaAtivada = true;
+                            CrossLocalNotifications.Current.Show("Mesa Liberada.", string.Format("Ao chegar na mesa realize checkin com a senha: {0}", 
+                                new StorageReserva().Consultar().SenhaCheckIn));
+
                             return false;
                         }
                         else
@@ -54,7 +63,7 @@ namespace SmartQueue.UI.Page
                         minutos -= 1;
                         segundos = 60;
                     }
-                        
+
                 }
                 else
                     segundos -= 1;
@@ -66,21 +75,26 @@ namespace SmartQueue.UI.Page
 
         private async void CancelarReserva()
         {
-            var sair = await DisplayAlert("Cancelar Reserva", "Tem certeza que deseja cancelar a reserva?", "Sim", "Não");
-
-            if (sair)
+            try
             {
-                reservaCancelada = true;
-                await Navigation.PopAsync(true);
-            }
-                
-        }
+                var sair = await DisplayAlert("Cancelar Reserva", "Tem certeza que deseja cancelar a reserva?", "Sim", "Não");
 
-        protected override void OnDisappearing()
-        {
-            reservaCancelada = true;
+                if (sair)
+                {
+                    if(await controller.CancelarMesa())
+                    {
+                        reservaCancelada = true;
+                        await Navigation.PopAsync(true);
+                    }
+                        
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "OK");
+            }
             
-            base.OnDisappearing();
+                
         }
 
         private void CancelarReserva_Clicked(object sender, EventArgs e)

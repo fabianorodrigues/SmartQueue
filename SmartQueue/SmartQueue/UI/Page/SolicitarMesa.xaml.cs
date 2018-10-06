@@ -1,4 +1,5 @@
-﻿using SmartQueue.UI.Master;
+﻿using SmartQueue.Controller;
+using SmartQueue.UI.Master;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,18 +14,29 @@ namespace SmartQueue.UI.Page
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SolicitarMesa : ContentPage
     {
+        private ReservaController controller;
+
         public SolicitarMesa()
         {
             InitializeComponent();
+            controller = new ReservaController();
         }
 
         private async void Solicitar()
         {
-            if (Int32.Parse(lblQtdAssentos.Text) == 0)
-                await DisplayAlert("Atenção", "Informe a quantidade de assentos", "Ok");
-            else
-                await Navigation.PushAsync(new MenuReserva());
+            try
+            {
+                if (int.Parse(lblQtdAssentos.Text) == 0)
+                    await DisplayAlert("Atenção", "Informe a quantidade de assentos", "Ok");
 
+                else if(await controller.SolicitarMesa(int.Parse(lblQtdAssentos.Text)))
+                        await Navigation.PushAsync(new MenuReserva());
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "Ok");
+            }
+                       
         }
 
         private void Button_Clicked(object sender, EventArgs e)

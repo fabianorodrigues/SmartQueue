@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace SmartQueue.Model
+namespace SmartQueue.Utils
 {
     public class Agrupar<TKey, TItem> : ObservableCollection<TItem>
     {

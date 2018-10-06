@@ -9,7 +9,11 @@
             <StackLayout VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="Center" Spacing="10" Margin="30">
 
-                <Label Text="Tempo para liberação da mesa." FontSize="Medium"
+
+                <!--<Label x:Name="lblInfoReserva" FontSize="Large"
+                HorizontalOptions="Center"/>-->
+                
+                <Label x:Name="lblInformacao" Text="Tempo para liberação da mesa." FontSize="Medium"
                 HorizontalOptions="Center"/>
 
                 <Label x:Name="lblTempoLiberarMesa" 

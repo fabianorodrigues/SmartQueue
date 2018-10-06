@@ -1,6 +1,7 @@
 ﻿using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using SmartQueue.Controller;
+using SmartQueue.DAL;
 using SmartQueue.UI.Page;
 using SmartQueue.UI.PopUp;
 using System;
@@ -38,15 +39,30 @@ namespace SmartQueue.UI.Master
             listViewMenu.ItemsSource = listaMenu;
 
             Detail = new NavigationPage(new SolicitarMesa());
+            VerificaReservaEmAndamento();
         }
 
         public async void Sair()
         {
-            var sair = await DisplayAlert("Confirmação de Logout", "Tem certeza que deseja sair?", "Sim", "Não");
+            try
+            {
+                var sair = await DisplayAlert("Confirmação de Logout", "Tem certeza que deseja sair?", "Sim", "Não");
 
-            if (sair)
-                if (await usuarioController.Sair())
-                    await Navigation.PopAsync(true);
+                if (sair)
+                    if (usuarioController.Sair())
+                        await Navigation.PopAsync(true);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "OK");                
+            }
+            
+        }
+
+        public async void VerificaReservaEmAndamento()
+        {
+            if (new StorageReserva().Count() > 0)
+                await Detail.Navigation.PushAsync(new MenuReserva());
         }
 
         private async void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)

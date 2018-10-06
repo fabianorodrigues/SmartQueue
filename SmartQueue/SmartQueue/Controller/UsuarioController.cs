@@ -1,6 +1,6 @@
 ﻿using SmartQueue.Service;
 using SmartQueue.Model;
-using SmartQueue.Utils;
+using SmartQueue.DAL;
 using System.Threading.Tasks;
 using System;
 
@@ -9,27 +9,34 @@ namespace SmartQueue.Controller
     public sealed class UsuarioController
     {
         private UsuarioService service;
-        private Storage storage;
+        private StorageUsuario storage;
 
         public UsuarioController()
         {
             service = new UsuarioService();
-            storage = new Storage();
+            storage = new StorageUsuario();
         }
 
         public bool UsuarioLogado()
         {
-            
-            Usuario usuario;
+            if (storage.Count() <= 0)
+                return false;
+            else
+                return true;
+        } 
 
+        public async Task<bool> Logar(string email, string senha)
+        {
             try
             {
-                usuario = storage.Consultar();
+                Usuario usuario = await service.Logar(email, senha);
 
-                if (usuario == null)
-                    return false;
-                else
-                    return true;
+                if (usuario.Id == 0)
+                    new ApplicationException("Erro desconhecido, tente novamente.");
+
+                storage.Incluir(usuario);
+                return true;
+
             }
             catch (Exception ex)
             {
@@ -39,26 +46,17 @@ namespace SmartQueue.Controller
             {
                 GC.Collect();
             }
-        } 
-
-        public async Task<bool> Logar(string email, string senha)
-        {
-            Usuario usuario = await service.Logar(email, senha);
-
-            if (usuario.Id != 0)
-            {
-                storage.Incluir(usuario);
-                return true;
-            }
-            else return false;
+            
         }
 
         public async Task<bool> Cadastrar(Usuario usuario)
         {
             usuario = await service.Cadastrar(usuario);
 
-            if (usuario.Id != 0) return true;
-            else return false;
+            if (usuario.Id == 0)
+                new ApplicationException("Erro desconhecido, tente novamente.");
+
+            return true;
         }
 
         public async Task<bool> AlterarSenha(string novaSenha)
@@ -68,13 +66,12 @@ namespace SmartQueue.Controller
 
             usuario = await service.AlterarSenha(usuario, novaSenha);
 
-            if (usuario.Senha != senhaAnterior)
-            {
-                storage.Alterar(usuario);
-                return true;
-            }
-            else
-                return false;
+            if(usuario.Senha == senhaAnterior)
+                new ApplicationException("Erro desconhecido, tente novamente.");
+
+            storage.Alterar(usuario);
+            return true;
+
         }
 
         public async Task<bool> RecuperarSenhaCpf(string cpf)
@@ -87,21 +84,20 @@ namespace SmartQueue.Controller
             return await service.RecuperarSenhaEmail(email);
         }
 
-        public async Task<bool> Sair()
+        public bool Sair()
         {
             try
             {
-               await service.Sair(storage.Consultar());
                storage.Excluir();
 
-                if (storage.Consultar() == null)
-                    return true;
-                else
-                    return false;
+                if (storage.Count() > 0)
+                    new ApplicationException("Erro desconhecido, tente novamente.");
+
+                return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return await Sair();
+                throw ex;
             }
             
         }

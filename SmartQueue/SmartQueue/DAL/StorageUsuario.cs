@@ -3,14 +3,14 @@ using SQLite;
 using System;
 using System.IO;
 
-namespace SmartQueue.Utils
+namespace SmartQueue.DAL
 {
-    public sealed class Storage
+    public sealed class StorageUsuario
     {
         private SQLiteConnection conexao;
 
 
-        public Storage()
+        public StorageUsuario()
         {
             conexao = new SQLiteConnection(Local("smartQueue.sqlite"));
             conexao.CreateTable<Usuario>();
