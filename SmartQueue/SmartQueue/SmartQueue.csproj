@@ -22,9 +22,6 @@
     <EmbeddedResource Update="UI\Master\Menu.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="UI\Master\MenuReserva.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="UI\Page\Cadastro.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
@@ -42,6 +39,9 @@
     </EmbeddedResource>
     <EmbeddedResource Update="UI\Page\Login.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\Page\MenuReserva.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\Page\Ranking.xaml">
       <Generator>MSBuild:Compile</Generator>

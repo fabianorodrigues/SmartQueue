@@ -16,5 +16,11 @@ namespace SmartQueue.UI.Page
 		{
 			InitializeComponent ();
 		}
-	}
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            var teste = this.Parent as TabbedPage;
+            teste.CurrentPage = teste.Children[0];
+        }
+    }
 }

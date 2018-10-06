@@ -13,7 +13,7 @@ namespace SmartQueue.UI.Page
         private int segundos;
         private int minutos;
         private int horas;
-        //private bool reservaCancelada;
+        private bool reservaCancelada;
         //private bool reservaAtivada;
 
         public Reserva ()
@@ -31,7 +31,9 @@ namespace SmartQueue.UI.Page
         {
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
-                if (segundos == 0)
+                if (reservaCancelada)
+                    return false;
+                else if (segundos == 0)
                 {
                     if (minutos == 0)
                     {
@@ -66,8 +68,19 @@ namespace SmartQueue.UI.Page
         {
             var sair = await DisplayAlert("Cancelar Reserva", "Tem certeza que deseja cancelar a reserva?", "Sim", "Não");
 
-            //if (sair)
-            //    reservaCancelada = true;
+            if (sair)
+            {
+                reservaCancelada = true;
+                await Navigation.PopAsync(true);
+            }
+                
+        }
+
+        protected override void OnDisappearing()
+        {
+            reservaCancelada = true;
+            
+            base.OnDisappearing();
         }
 
         private void CancelarReserva_Clicked(object sender, EventArgs e)
