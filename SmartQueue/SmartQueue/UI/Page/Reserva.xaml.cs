@@ -36,19 +36,23 @@ namespace SmartQueue.UI.Page
 
         private async void CarregaDados()
         {
-            List<Produto> produtos = await new ProdutoController().ListarProdutos();
-            List<ItemPedido> itens = controller.ItensPedidosPendentes();
-
-            dicListaItensPendentes = new Dictionary<string, int>();
-
-            foreach (var item in itens)
+            if(lvPedidosPendentes.ItemsSource == null)
             {
-                var produto = produtos.First(x => x.Id == item.ProdutoId);
-                dicListaItensPendentes.Add(produto.Nome, item.Quantidade);
-            }
-         
+                List<Produto> produtos = await new ProdutoController().ListarProdutos();
+                List<ItemPedido> itens = controller.ItensPedidosPendentes();
 
-            lvPedidosPendentes.ItemsSource = dicListaItensPendentes;
+                dicListaItensPendentes = new Dictionary<string, int>();
+
+                foreach (var item in itens)
+                {
+                    var produto = produtos.First(x => x.Id == item.ProdutoId);
+                    dicListaItensPendentes.Add(produto.Nome, item.Quantidade);
+                }
+
+
+                lvPedidosPendentes.ItemsSource = dicListaItensPendentes;
+            }
+            
         }
 
         //public async void ConsultarTempo()
@@ -126,6 +130,12 @@ namespace SmartQueue.UI.Page
         {
             base.OnAppearing();
             CarregaDados();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            lvPedidosPendentes.ItemsSource = null;
         }
     }
 }

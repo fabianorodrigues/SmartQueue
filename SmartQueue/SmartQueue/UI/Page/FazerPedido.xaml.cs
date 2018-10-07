@@ -15,16 +15,13 @@ namespace SmartQueue.UI.Page
 	{
         private ProdutoController controller;
         private Dictionary<int, int> dicItensPedidos;
-        private IEnumerable<ItemCardapio> cardapio;
 
         public FazerPedido ()
 		{
 			InitializeComponent ();
 
             controller = new ProdutoController();
-            dicItensPedidos = new Dictionary<int, int>();
-
-            CarregaCardapio();
+            
         }
 
         private void IndicadorDeAtividade()
@@ -39,11 +36,17 @@ namespace SmartQueue.UI.Page
 
             try
             {
-                cardapio = await controller.Cardapio();
-                lvCardapio.ItemsSource = from item in cardapio
-                                         orderby item.CategoriaNome
-                                         group item by item.CategoriaNome into grupos
-                                         select new Agrupar<string, ItemCardapio>(grupos.Key.ToString(), grupos);
+                if(lvCardapio.ItemsSource == null)
+                {
+                    dicItensPedidos = new Dictionary<int, int>();
+
+                    IEnumerable<ItemCardapio> cardapio = await controller.Cardapio();
+                    lvCardapio.ItemsSource = from item in cardapio
+                                             orderby item.CategoriaNome
+                                             group item by item.CategoriaNome into grupos
+                                             select new Agrupar<string, ItemCardapio>(grupos.Key.ToString(), grupos);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -69,14 +72,18 @@ namespace SmartQueue.UI.Page
         {
             try
             {
-                new ReservaController().RegistrarPedidos(dicItensPedidos);
+                if(dicItensPedidos != null)
+                {
+                    new ReservaController().RegistrarPedidos(dicItensPedidos);
 
-                dicItensPedidos = new Dictionary<int, int>();
+                    dicItensPedidos = new Dictionary<int, int>();
 
-                await DisplayAlert("Confirmação", "Pedidos registrados com sucesso.", "OK");
+                    await DisplayAlert("Confirmação", "Pedidos registrados com sucesso.", "OK");
 
-                var menuReserva = this.Parent as TabbedPage;
-                menuReserva.CurrentPage = menuReserva.Children[0];
+                    var menuReserva = this.Parent as TabbedPage;
+                    menuReserva.CurrentPage = menuReserva.Children[0];
+                }
+                
             }
             catch (Exception)
             {
@@ -120,14 +127,16 @@ namespace SmartQueue.UI.Page
             dicItensPedidos.Add(produtoId, quantidade);
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            CarregaCardapio();
+        }
+
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-
-            lvCardapio.ItemsSource = from item in cardapio
-                                     orderby item.CategoriaNome
-                                     group item by item.CategoriaNome into grupos
-                                     select new Agrupar<string, ItemCardapio>(grupos.Key.ToString(), grupos);
+            lvCardapio.ItemsSource = null;
         }
 
         private void ButtonRegistrarPedidos_Clicked(object sender, EventArgs e)
