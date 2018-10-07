@@ -9,10 +9,6 @@
             <StackLayout VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="Center" Spacing="10" Margin="30">
 
-
-                <!--<Label x:Name="lblInfoReserva" FontSize="Large"
-                HorizontalOptions="Center"/>-->
-                
                 <Label x:Name="lblInformacao" Text="Tempo para liberação da mesa." FontSize="Medium"
                 HorizontalOptions="Center"/>
 
@@ -24,6 +20,21 @@
                 <Button Text="Cancelar Reserva" Clicked="CancelarReserva_Clicked"/>
 
             </StackLayout>
+
+            <BoxView BackgroundColor="#C0120A" HeightRequest="1"/>
+
+            <ListView x:Name="lvPedidosPendentes">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Path=Key}" />
+                                <Label Text="{Binding Path=Value.Quantidade}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
         </StackLayout>
     </ContentPage.Content>

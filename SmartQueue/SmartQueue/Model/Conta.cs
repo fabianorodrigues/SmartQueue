@@ -1,11 +1,13 @@
 ﻿using System;
+using SQLite;
 using Newtonsoft.Json;
 
 namespace SmartQueue.Model
 {
+    [Table("Conta")]
     public sealed class Conta
     {
-        [JsonProperty("id")]
+        [JsonProperty("id"), PrimaryKey]
         public int Id { get; set; }
 
         [JsonProperty("reservaId")]

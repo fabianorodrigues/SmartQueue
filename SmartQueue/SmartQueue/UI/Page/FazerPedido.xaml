@@ -10,17 +10,16 @@
     
     <ContentPage.Content>
 
-        <StackLayout Orientation="Vertical">
-            <Entry x:Name="txtProcurar" Placeholder="Procurar..." TextChanged="Procurar_TextChanged" HorizontalOptions="FillAndExpand"/>
-
+        <StackLayout Margin="5">
+            
             <ActivityIndicator
                 x:Name="activityIndicator"
-                IsRunning="True"
-                IsVisible="True"
+                IsRunning="False"
+                IsVisible="False"
                 HorizontalOptions="Center" VerticalOptions="Center">
             </ActivityIndicator>
 
-            <ListView x:Name="listaCardapio" Margin="5" 
+            <ListView x:Name="listaCardapio" 
                       IsGroupingEnabled="True"
                       SeparatorVisibility="Default"
                       SeparatorColor="#B3B3B3"
@@ -43,14 +42,37 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Padding="8,0,8,0">
-                                <Label Text="{Binding ProdutoNome}" TextColor="Black" LineBreakMode="TailTruncation" FontAttributes="None"/>
-                                <Label Text="{Binding ProdutoValor, StringFormat=' {0:c}'}" TextColor="#B3B3B3" LineBreakMode="TailTruncation" FontAttributes="None" />
-                                <StackLayout Orientation="Horizontal" Spacing="5">
-                                    <Label Text="0" FontAttributes="None"/>
+                            <Grid Padding="8,0,8,0">
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                
+                                
+                                <Label Text="{Binding ProdutoNome}" TextColor="Black" 
+                                       LineBreakMode="TailTruncation" 
+                                       FontAttributes="None"
+                                       Grid.ColumnSpan="2" Grid.Row="0"/>
+                                <Label Text="{Binding ProdutoValor, StringFormat=' {0:c}'}" 
+                                       TextColor="#B3B3B3" 
+                                       LineBreakMode="TailTruncation" 
+                                       FontAttributes="None"
+                                       Grid.Column="0" Grid.Row="1"/>
+                                
+                                <StackLayout Orientation="Horizontal" Spacing="5" Grid.Column="1" Grid.Row="1">
+                                    <Label Text="0" FontAttributes="None" FontSize="Medium" VerticalOptions="Center"/>
                                     <Stepper Increment="1" Value="0" ValueChanged="Stepper_ValueChanged"/>
                                 </StackLayout>
-                            </StackLayout>
+                                
+                                
+                            </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

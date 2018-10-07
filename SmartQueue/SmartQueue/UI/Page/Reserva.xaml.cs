@@ -1,8 +1,9 @@
 ﻿using Plugin.LocalNotifications;
 using SmartQueue.Controller;
 using SmartQueue.DAL;
+using SmartQueue.Model;
 using System;
-
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -28,6 +29,29 @@ namespace SmartQueue.UI.Page
             horas = 0;
 
             LiberarMesa();
+
+            CarregaDados();
+
+
+        }
+
+        private void CarregaDados()
+        {
+            //List<Produto> produtos = await new ProdutoController().ListarProdutos();
+
+            //List<ItemPedido> itens = new List<ItemPedido>()
+            //{
+            //    new ItemPedido(){ProdutoId = 55, Quantidade = 2},
+            //    new ItemPedido(){ProdutoId = 56, Quantidade = 2}
+            //};
+
+            //var list = new Dictionary<string, ItemPedido>()
+            //{
+            //    {"Produto teste",  new ItemPedido(){ProdutoId = 55, Quantidade = 2}},
+            //    {"Produto testando", new ItemPedido(){ProdutoId = 54, Quantidade = 5} }
+            //};
+
+            //lvPedidosPendentes.ItemsSource = list;
         }
 
         //public async void ConsultarTempo()

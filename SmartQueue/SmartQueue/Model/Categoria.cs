@@ -9,8 +9,5 @@ namespace SmartQueue.Model
 
         [JsonProperty("caracteristica")]
         public string Caracteristica { get; set; }
-
-        [JsonProperty("tamanho")]
-        public string Tamanho { get; set; }
     }
 }

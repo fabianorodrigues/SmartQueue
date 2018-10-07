@@ -24,6 +24,8 @@ namespace SmartQueue.UI.Page
 
         private async void Solicitar()
         {
+            IndicadorDeAtividade();
+
             try
             {
                 if (int.Parse(lblQtdAssentos.Text) == 0)
@@ -36,7 +38,14 @@ namespace SmartQueue.UI.Page
             {
                 await DisplayAlert("Erro", ex.Message, "Ok");
             }
-                       
+
+            IndicadorDeAtividade();
+        }
+
+        public void IndicadorDeAtividade()
+        {
+            activityIndicator.IsRunning = !activityIndicator.IsRunning;
+            activityIndicator.IsVisible = !activityIndicator.IsVisible;
         }
 
         private void Button_Clicked(object sender, EventArgs e)

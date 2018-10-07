@@ -23,8 +23,16 @@ namespace SmartQueue.UI.Page
             CarregaCardapio();
         }
 
+        private void IndicadorDeAtividade()
+        {
+            activityIndicator.IsRunning = !activityIndicator.IsRunning;
+            activityIndicator.IsVisible = !activityIndicator.IsVisible;
+        }
+
         private async void CarregaCardapio()
         {
+            IndicadorDeAtividade();
+
             try
             {
                 cardapio = await controller.Cardapio();
@@ -35,23 +43,16 @@ namespace SmartQueue.UI.Page
             {
                 await DisplayAlert("Erro", ex.Message, "Ok");
             }
-
-            activityIndicator.IsRunning = !activityIndicator.IsRunning;
-            activityIndicator.IsVisible = !activityIndicator.IsVisible;
+            finally
+            {
+                IndicadorDeAtividade();
+            }
+            
         }
 
-        private void Procurar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            listaCardapio.ItemsSource = Listar(txtProcurar.Text);
-        }
-
-        public IEnumerable<Agrupar<string, ItemCardapio>> Listar(string filtro = "")
-        {
-            IEnumerable<ItemCardapio> cardapioFiltrado = cardapio;
-
-            if (!string.IsNullOrEmpty(filtro))
-                cardapioFiltrado = cardapio.Where(l => (l.ProdutoNome.ToLower().Contains(filtro.ToLower())) || l.CategoriaId.ToString().ToLower().Contains(filtro.ToLower()));
-            return from item in cardapioFiltrado
+        public IEnumerable<Agrupar<string, ItemCardapio>> Listar()
+        {       
+            return from item in cardapio
                    orderby item.CategoriaCaracteristica
                    group item by item.CategoriaCaracteristica into grupos
                    select new Agrupar<string, ItemCardapio>(grupos.Key.ToString(), grupos);
