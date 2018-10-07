@@ -38,6 +38,7 @@ namespace SmartQueue.UI.Master
 
             listViewMenu.ItemsSource = listaMenu;
 
+            IsGestureEnabled = false;
             Detail = new NavigationPage(new SolicitarMesa());
             VerificaReservaEmAndamento();
         }

@@ -19,7 +19,7 @@
                 HorizontalOptions="Center" VerticalOptions="Center">
             </ActivityIndicator>
 
-            <ListView x:Name="listaCardapio" 
+            <ListView x:Name="lvCardapio" 
                       IsGroupingEnabled="True"
                       SeparatorVisibility="Default"
                       SeparatorColor="#B3B3B3"
@@ -67,8 +67,11 @@
                                        Grid.Column="0" Grid.Row="1"/>
                                 
                                 <StackLayout Orientation="Horizontal" Spacing="5" Grid.Column="1" Grid.Row="1">
-                                    <Label Text="0" FontAttributes="None" FontSize="Medium" VerticalOptions="Center"/>
-                                    <Stepper Increment="1" Value="0" ValueChanged="Stepper_ValueChanged"/>
+                                    <Label Text="0"
+                                           FontAttributes="None" FontSize="Large" 
+                                           VerticalOptions="Center" Margin="10"/>
+                                    <Button Text="-" WidthRequest="50" Clicked="ButtonRemover_Clicked" BorderRadius="0"/>
+                                    <Button Text="+" WidthRequest="50" Clicked="ButtonAdicionar_Clicked" BorderRadius="0"/>
                                 </StackLayout>
                                 
                                 

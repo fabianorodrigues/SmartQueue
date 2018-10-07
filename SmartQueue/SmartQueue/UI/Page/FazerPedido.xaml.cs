@@ -4,7 +4,7 @@ using SmartQueue.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,12 +14,15 @@ namespace SmartQueue.UI.Page
 	public partial class FazerPedido : ContentPage
 	{
         private ProdutoController controller;
-        private IEnumerable<ItemCardapio> cardapio;
+        private List<ItemPedido> listaItensPedidos;
 
         public FazerPedido ()
 		{
 			InitializeComponent ();
+
             controller = new ProdutoController();
+            listaItensPedidos = new List<ItemPedido>();
+
             CarregaCardapio();
         }
 
@@ -35,22 +38,17 @@ namespace SmartQueue.UI.Page
 
             try
             {
-                cardapio = await controller.Cardapio();
-                listaCardapio.ItemsSource = Listar();
-
+                lvCardapio.ItemsSource = MontaCardapio(await controller.Cardapio());
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Erro", ex.Message, "Ok");
             }
-            finally
-            {
-                IndicadorDeAtividade();
-            }
-            
+
+            IndicadorDeAtividade();
         }
 
-        public IEnumerable<Agrupar<string, ItemCardapio>> Listar()
+        private IEnumerable<Agrupar<string, ItemCardapio>> MontaCardapio(IEnumerable<ItemCardapio> cardapio)
         {       
             return from item in cardapio
                    orderby item.CategoriaCaracteristica
@@ -58,19 +56,36 @@ namespace SmartQueue.UI.Page
                    select new Agrupar<string, ItemCardapio>(grupos.Key.ToString(), grupos);
         }
 
+        private Label RetornaLabelQuantidade(Button button)
+        {
+            StackLayout layout = (StackLayout)button.Parent;
+            return (Label)layout.Children[0];
+        }
+
         private async void listaCardapio_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             await Navigation.PushAsync(new SobreProduto((e.Item as ItemCardapio).ProdutoId));
         }
 
-        private void Stepper_ValueChanged(object sender, ValueChangedEventArgs e)
+        private void ButtonRemover_Clicked(object sender, EventArgs e)
         {
-            Stepper stepper = (Stepper)sender;
-            StackLayout layout = (StackLayout)stepper.Parent;
+            Label lblQuantidade = RetornaLabelQuantidade((Button)sender);
 
-            Label labelQuantidade = (Label)layout.Children[0];
+            if (lblQuantidade.Text != "0")
+            {
+                int quantidade = int.Parse(lblQuantidade.Text);
+                quantidade--;
+                lblQuantidade.Text = quantidade.ToString();
+            }
+        }
 
-            labelQuantidade.Text = stepper.Value.ToString();
+        private void ButtonAdicionar_Clicked(object sender, EventArgs e)
+        {
+            Label lblQuantidade = RetornaLabelQuantidade((Button)sender);
+
+            int quantidade = int.Parse(lblQuantidade.Text);
+            quantidade++;
+            lblQuantidade.Text = quantidade.ToString();
         }
     }
 }
