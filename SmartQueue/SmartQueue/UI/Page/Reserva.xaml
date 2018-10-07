@@ -27,10 +27,25 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout>
-                                <Label Text="{Binding Path=Key}" />
-                                <Label Text="{Binding Path=Value.Quantidade}"/>
-                            </StackLayout>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                
+                                <Label Text="{Binding Path=Key}" 
+                                       FontSize="Large"
+                                       LineBreakMode="TailTruncation" 
+                                       Grid.Column="0" Grid.Row="0" />
+                                
+                                <Label Text="{Binding Path=Value}"
+                                       FontSize="Large"
+                                       Grid.Column="1" Grid.Row="0"/>
+                            </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -14,14 +14,15 @@ namespace SmartQueue.UI.Page
 	public partial class FazerPedido : ContentPage
 	{
         private ProdutoController controller;
-        private List<ItemPedido> listaItensPedidos;
+        private Dictionary<int, int> dicItensPedidos;
+        private IEnumerable<ItemCardapio> cardapio;
 
         public FazerPedido ()
 		{
 			InitializeComponent ();
 
             controller = new ProdutoController();
-            listaItensPedidos = new List<ItemPedido>();
+            dicItensPedidos = new Dictionary<int, int>();
 
             CarregaCardapio();
         }
@@ -38,7 +39,11 @@ namespace SmartQueue.UI.Page
 
             try
             {
-                lvCardapio.ItemsSource = MontaCardapio(await controller.Cardapio());
+                cardapio = await controller.Cardapio();
+                lvCardapio.ItemsSource = from item in cardapio
+                                         orderby item.CategoriaNome
+                                         group item by item.CategoriaNome into grupos
+                                         select new Agrupar<string, ItemCardapio>(grupos.Key.ToString(), grupos);
             }
             catch (Exception ex)
             {
@@ -48,18 +53,35 @@ namespace SmartQueue.UI.Page
             IndicadorDeAtividade();
         }
 
-        private IEnumerable<Agrupar<string, ItemCardapio>> MontaCardapio(IEnumerable<ItemCardapio> cardapio)
-        {       
-            return from item in cardapio
-                   orderby item.CategoriaCaracteristica
-                   group item by item.CategoriaCaracteristica into grupos
-                   select new Agrupar<string, ItemCardapio>(grupos.Key.ToString(), grupos);
-        }
-
         private Label RetornaLabelQuantidade(Button button)
         {
             StackLayout layout = (StackLayout)button.Parent;
             return (Label)layout.Children[0];
+        }
+
+        private int RetornaNumeroProduto(StackLayout layout)
+        {
+            Label lblProdutoId = (Label)layout.Children[1];
+            return int.Parse(lblProdutoId.Text);
+        }
+
+        private async void RegistrarPedidos()
+        {
+            try
+            {
+                new ReservaController().RegistrarPedidos(dicItensPedidos);
+
+                dicItensPedidos = new Dictionary<int, int>();
+
+                await DisplayAlert("Confirmação", "Pedidos registrados com sucesso.", "OK");
+
+                var menuReserva = this.Parent as TabbedPage;
+                menuReserva.CurrentPage = menuReserva.Children[0];
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Erro", "Erro desconhecido, tente novemente.", "Ok");
+            }
         }
 
         private async void listaCardapio_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -76,6 +98,12 @@ namespace SmartQueue.UI.Page
                 int quantidade = int.Parse(lblQuantidade.Text);
                 quantidade--;
                 lblQuantidade.Text = quantidade.ToString();
+
+                int produtoId = RetornaNumeroProduto((StackLayout)lblQuantidade.Parent);
+                dicItensPedidos.Remove(produtoId);
+
+                if (quantidade > 0)
+                    dicItensPedidos.Add(produtoId, quantidade);
             }
         }
 
@@ -86,6 +114,25 @@ namespace SmartQueue.UI.Page
             int quantidade = int.Parse(lblQuantidade.Text);
             quantidade++;
             lblQuantidade.Text = quantidade.ToString();
+
+            int produtoId = RetornaNumeroProduto((StackLayout)lblQuantidade.Parent);
+            dicItensPedidos.Remove(produtoId);
+            dicItensPedidos.Add(produtoId, quantidade);
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            lvCardapio.ItemsSource = from item in cardapio
+                                     orderby item.CategoriaNome
+                                     group item by item.CategoriaNome into grupos
+                                     select new Agrupar<string, ItemCardapio>(grupos.Key.ToString(), grupos);
+        }
+
+        private void ButtonRegistrarPedidos_Clicked(object sender, EventArgs e)
+        {
+            RegistrarPedidos();
         }
     }
 }

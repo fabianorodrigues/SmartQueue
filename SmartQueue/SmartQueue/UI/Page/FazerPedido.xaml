@@ -10,13 +10,27 @@
     
     <ContentPage.Content>
 
-        <StackLayout Margin="5">
+        <StackLayout>
             
+            <Grid BackgroundColor="#C0120A">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Button Image="icone_salvar.png" WidthRequest="50" HeightRequest="50" Grid.Column="1" Grid.Row="0" Clicked="ButtonRegistrarPedidos_Clicked"/>
+
+            </Grid>
+
             <ActivityIndicator
                 x:Name="activityIndicator"
                 IsRunning="False"
                 IsVisible="False"
-                HorizontalOptions="Center" VerticalOptions="Center">
+                HorizontalOptions="Center" VerticalOptions="Center"
+                HeightRequest="10">
             </ActivityIndicator>
 
             <ListView x:Name="lvCardapio" 
@@ -65,13 +79,14 @@
                                        LineBreakMode="TailTruncation" 
                                        FontAttributes="None"
                                        Grid.Column="0" Grid.Row="1"/>
-                                
+
                                 <StackLayout Orientation="Horizontal" Spacing="5" Grid.Column="1" Grid.Row="1">
                                     <Label Text="0"
                                            FontAttributes="None" FontSize="Large" 
                                            VerticalOptions="Center" Margin="10"/>
-                                    <Button Text="-" WidthRequest="50" Clicked="ButtonRemover_Clicked" BorderRadius="0"/>
-                                    <Button Text="+" WidthRequest="50" Clicked="ButtonAdicionar_Clicked" BorderRadius="0"/>
+                                    <Label Text="{Binding ProdutoId}" IsVisible="False"/>
+                                    <Button Text="-" HeightRequest="50" WidthRequest="50" Clicked="ButtonRemover_Clicked" BorderRadius="0"/>
+                                    <Button Text="+" HeightRequest="50" WidthRequest="50" Clicked="ButtonAdicionar_Clicked" BorderRadius="0"/>
                                 </StackLayout>
                                 
                                 

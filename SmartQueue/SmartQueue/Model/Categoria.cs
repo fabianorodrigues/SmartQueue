@@ -7,7 +7,7 @@ namespace SmartQueue.Model
         [JsonProperty("id")]
         public int Id { get; set; }
 
-        [JsonProperty("caracteristica")]
-        public string Caracteristica { get; set; }
+        [JsonProperty("NOME")]
+        public string Nome { get; set; }
     }
 }

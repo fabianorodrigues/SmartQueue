@@ -19,8 +19,8 @@ namespace SmartQueue.UI.Page
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            var teste = this.Parent as TabbedPage;
-            teste.CurrentPage = teste.Children[0];
+            var menuReserva = this.Parent as TabbedPage;
+            menuReserva.CurrentPage = menuReserva.Children[0];
         }
     }
 }

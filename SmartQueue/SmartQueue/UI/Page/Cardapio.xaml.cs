@@ -51,8 +51,8 @@ namespace SmartQueue.UI.Page
             if (!string.IsNullOrEmpty(filtro))
                 cardapioFiltrado = cardapio.Where(l => (l.ProdutoNome.ToLower().Contains(filtro.ToLower())) || l.CategoriaId.ToString().ToLower().Contains(filtro.ToLower()));
             return from item in cardapioFiltrado
-                   orderby item.CategoriaCaracteristica
-                   group item by item.CategoriaCaracteristica into grupos
+                   orderby item.CategoriaNome
+                   group item by item.CategoriaNome into grupos
                    select new Agrupar<string, ItemCardapio>(grupos.Key.ToString(), grupos);
         }
 

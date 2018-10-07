@@ -22,15 +22,6 @@ namespace SmartQueue.Model
         [JsonProperty("quantidadePessoas")]
         public int QuantidadePessoas { get; set; }
 
-        [JsonProperty("senhaCheckIn")]
-        public string SenhaCheckIn { get; set; }
-
-        [JsonProperty("dataCheckIn")]
-        public DateTime DataCheckIn { get; set; }
-
-        [JsonProperty("dataCheckOut")]
-        public DateTime DataCheckOut { get; set; }
-
         [JsonProperty("tempoDeEspera")]
         public TimeSpan TempoDeEspera { get; set; }
 

@@ -125,5 +125,39 @@ namespace SmartQueue.Controller
             
         }
 
+        public void RegistrarPedidos(Dictionary<int, int> dicItensPedidos)
+        {
+            StorageItemPedido storageItem = new StorageItemPedido();
+
+            try
+            {
+                foreach (var item in dicItensPedidos)
+                {
+                    storageItem.Incluir(new ItemPedido()
+                    {
+                        ProdutoId = item.Key,
+                        Quantidade = item.Value
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<ItemPedido> ItensPedidosPendentes()
+        {
+            try
+            {
+                return new StorageItemPedido().Listar();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
     }
 }

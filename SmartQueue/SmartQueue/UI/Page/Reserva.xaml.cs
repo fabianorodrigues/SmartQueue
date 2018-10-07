@@ -4,6 +4,7 @@ using SmartQueue.DAL;
 using SmartQueue.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,6 +19,7 @@ namespace SmartQueue.UI.Page
         private int minutos;
         private int horas;
         private bool reservaCancelada;
+        private Dictionary<string, int> dicListaItensPendentes;
 
         public Reserva ()
 		{
@@ -30,28 +32,23 @@ namespace SmartQueue.UI.Page
 
             LiberarMesa();
 
-            CarregaDados();
-
-
         }
 
-        private void CarregaDados()
+        private async void CarregaDados()
         {
-            //List<Produto> produtos = await new ProdutoController().ListarProdutos();
+            List<Produto> produtos = await new ProdutoController().ListarProdutos();
+            List<ItemPedido> itens = controller.ItensPedidosPendentes();
 
-            //List<ItemPedido> itens = new List<ItemPedido>()
-            //{
-            //    new ItemPedido(){ProdutoId = 55, Quantidade = 2},
-            //    new ItemPedido(){ProdutoId = 56, Quantidade = 2}
-            //};
+            dicListaItensPendentes = new Dictionary<string, int>();
 
-            //var list = new Dictionary<string, ItemPedido>()
-            //{
-            //    {"Produto teste",  new ItemPedido(){ProdutoId = 55, Quantidade = 2}},
-            //    {"Produto testando", new ItemPedido(){ProdutoId = 54, Quantidade = 5} }
-            //};
+            foreach (var item in itens)
+            {
+                var produto = produtos.First(x => x.Id == item.ProdutoId);
+                dicListaItensPendentes.Add(produto.Nome, item.Quantidade);
+            }
+         
 
-            //lvPedidosPendentes.ItemsSource = list;
+            lvPedidosPendentes.ItemsSource = dicListaItensPendentes;
         }
 
         //public async void ConsultarTempo()
@@ -71,8 +68,7 @@ namespace SmartQueue.UI.Page
                     {
                         if (horas == 0)
                         {
-                            CrossLocalNotifications.Current.Show("Mesa Liberada.", string.Format("Ao chegar na mesa realize checkin com a senha: {0}", 
-                                new StorageReserva().Consultar().SenhaCheckIn));
+                            CrossLocalNotifications.Current.Show("Mesa Liberada.", string.Format("Ao chegar na mesa realize checkin com o número e senha da mesa."));
 
                             return false;
                         }
@@ -124,6 +120,12 @@ namespace SmartQueue.UI.Page
         private void CancelarReserva_Clicked(object sender, EventArgs e)
         {
             CancelarReserva();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            CarregaDados();
         }
     }
 }

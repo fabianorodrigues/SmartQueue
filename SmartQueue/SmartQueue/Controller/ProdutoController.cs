@@ -23,14 +23,14 @@ namespace SmartQueue.Controller
             IEnumerable<ItemCardapio> cardapio = from produto in produtos
                                                  join categoria in categorias
                                                  on produto.CategoriaId equals categoria.Id
-                                                 orderby categoria.Caracteristica
+                                                 orderby categoria.Nome
                                                  select new ItemCardapio
                                                  {
                                                      ProdutoId = produto.Id,
                                                      ProdutoNome = produto.Nome,
                                                      ProdutoValor = produto.Valor,
                                                      CategoriaId = categoria.Id,
-                                                     CategoriaCaracteristica = categoria.Caracteristica
+                                                     CategoriaNome = categoria.Nome
                                                  };
 
             return cardapio;
