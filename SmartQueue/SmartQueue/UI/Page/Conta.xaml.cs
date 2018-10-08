@@ -28,7 +28,7 @@ namespace SmartQueue.UI.Page
                 if (new StorageConta().Count() > 0 && new StorageItemPedido().Count() > 0)
                     RealizarPedidosAberturaConta();
                 else
-                    await DisplayAlert("Não há pedidos finalizados.", "A conta só estará disponivel após ter algum pedido ser finalizado.", "OK");
+                    await DisplayAlert("Não há pedidos finalizados.", "A conta só estará disponivel após ter algum pedido finalizado.", "OK");
             }
             else if (!threadAtivada)
             {
