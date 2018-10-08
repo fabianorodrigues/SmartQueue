@@ -10,7 +10,7 @@
                 Text="Não há pedidos finalizados" 
                     FontSize="Medium" 
                     HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
-            
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -20,10 +20,15 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-            </Grid>
 
-            <Label Text="Pedido" Grid.Column="0" Grid.Row="0"/>
-            <Label Text="Qtd" Grid.Column="1" Grid.Row="0"/>
+                <Label Text="Pedido" Grid.Column="0" Grid.Row="0" 
+                       TextColor="Black"
+                       FontSize="Medium"/>
+                <Label Text="Qtd" Grid.Column="1" Grid.Row="0" 
+                       TextColor="Black"
+                       FontSize="Medium"/>
+
+            </Grid>
 
             <BoxView BackgroundColor="#C0120A" HeightRequest="1"/>
 
