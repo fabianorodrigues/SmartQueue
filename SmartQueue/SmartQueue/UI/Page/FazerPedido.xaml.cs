@@ -1,4 +1,5 @@
 ﻿using SmartQueue.Controller;
+using SmartQueue.DAL;
 using SmartQueue.Model;
 using SmartQueue.Utils;
 using System;
@@ -74,14 +75,22 @@ namespace SmartQueue.UI.Page
             {
                 if(dicItensPedidos != null)
                 {
-                    new ReservaController().RegistrarPedidos(dicItensPedidos);
+                    if(new StorageConta().Count() < 0)
+                    {
+                        new ReservaController().RegistrarPedidos(dicItensPedidos);
+                        var menuReserva = this.Parent as TabbedPage;
+                        menuReserva.CurrentPage = menuReserva.Children[0];
+                    }
+                    else if(await new ContaController().RealizarPedido(dicItensPedidos))
+                    {
+                        var menuReserva = this.Parent as TabbedPage;
+                        menuReserva.CurrentPage = menuReserva.Children[1];
+                    }
 
                     dicItensPedidos = new Dictionary<int, int>();
 
                     await DisplayAlert("Confirmação", "Pedido registrado com sucesso.", "OK");
-
-                    var menuReserva = this.Parent as TabbedPage;
-                    menuReserva.CurrentPage = menuReserva.Children[0];
+                    
                 }
                 
             }

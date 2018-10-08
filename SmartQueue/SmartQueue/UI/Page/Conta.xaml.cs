@@ -23,7 +23,7 @@ namespace SmartQueue.UI.Page
         {
             if(layoutConta.IsVisible == false)
             {
-                if (new StorageConta().Count() > 0)
+                if (new StorageConta().Count() > 0 && new StorageItemPedido().Count() > 0)
                     RealizarPedidosAberturaConta();
             }
             

@@ -23,6 +23,34 @@ namespace SmartQueue.Controller
             return await service.ConsultarConta(idReserva);
         }
 
+        public async Task<bool> RealizarPedido(Dictionary<int, int> dicItensPedidos)
+        {
+            List<ItemPedido> listaItens = new List<ItemPedido>();
+
+            try
+            {
+                foreach (var item in dicItensPedidos)
+                {
+                    listaItens.Add(new ItemPedido()
+                    {
+                        ProdutoId = item.Key,
+                        Quantidade = item.Value
+                    });
+                }
+
+                Pedido pedido = await service.RealizarPedido(listaItens, storage.Consultar().Id);
+
+                if (pedido.Id != 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<bool> RealizarPedido()
         {
             StorageItemPedido storageItem = new StorageItemPedido();

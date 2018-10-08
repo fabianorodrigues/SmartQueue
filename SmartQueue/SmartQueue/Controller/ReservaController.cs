@@ -83,14 +83,15 @@ namespace SmartQueue.Controller
 
                 Conta conta = await service.AtivarReserva(reserva, senhaDaMesa);
 
-                storage.Alterar(reserva);
-
                 StorageConta storageConta = new StorageConta();
 
                 if (storageConta.Count() > 0)
                     storageConta.Excluir();
 
                 storageConta.Incluir(conta);
+
+                reserva.Status = "Em Uso";
+                storage.Alterar(reserva);
 
                 return true;
             }
