@@ -50,7 +50,9 @@ namespace SmartQueue.UI.Page
 
         private void Button_Clicked(object sender, EventArgs e)
         {
+            btnSolicitar.IsEnabled = false;
             Solicitar();
+            btnSolicitar.IsEnabled = true;
         }
 
         private void Stepper_ValueChanged(object sender, ValueChangedEventArgs e)

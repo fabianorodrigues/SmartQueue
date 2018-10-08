@@ -26,7 +26,7 @@
                             ValueChanged="Stepper_ValueChanged"
                             HorizontalOptions="Center"/>
             
-            <Button Text="Solicitar"
+            <Button x:Name="btnSolicitar" Text="Solicitar"
                     Clicked="Button_Clicked"/>
             
         </StackLayout>
