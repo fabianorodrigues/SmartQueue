@@ -28,12 +28,7 @@ namespace SmartQueue.UI.Page
                 if (new StorageConta().Count() > 0 && new StorageItemPedido().Count() > 0)
                     RealizarPedidosAberturaConta();
                 else
-                {
-                    var menuReserva = this.Parent as TabbedPage;
-                    menuReserva.CurrentPage = menuReserva.Children[0];
                     await DisplayAlert("Não há pedidos finalizados.", "A conta só estará disponivel após ter algum pedido ser finalizado.", "OK");
-                }
-                    
             }
             else if (!threadAtivada)
             {
