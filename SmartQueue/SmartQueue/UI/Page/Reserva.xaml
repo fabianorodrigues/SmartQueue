@@ -6,14 +6,34 @@
     <ContentPage.Content>
         <StackLayout>
 
-            <StackLayout VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="Center" Spacing="10" Margin="30">
+            <StackLayout x:Name="layoutAtivarReserva" VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="Center" Spacing="10" Margin="30" IsVisible="False">
 
-                <Label x:Name="lblInformacao" Text="Tempo para liberação da mesa." FontSize="Medium"
+                <Label x:Name="lblInformacaoAtivar" Text="Ativar Reserva" FontSize="Large"
                 HorizontalOptions="Center"/>
 
-                <Label x:Name="lblTempoLiberarMesa" 
-                Text="00:00:00" 
+                <Label Text="Nº da mesa" IsVisible="False" Margin="5,0,0,0"/>
+                <Entry Placeholder="Nº da mesa" x:Name="txtNmrMesa" 
+                       Focused="txt_Focused" 
+                       Unfocused="txt_Unfocused"
+                       Keyboard="Numeric"/>
+
+                <Label Text="Senha da mesa" IsVisible="False" Margin="5,0,0,0"/>
+                <Entry Placeholder="Senha da mesa" x:Name="txtSenhaMesa" 
+                       Focused="txt_Focused" 
+                       Unfocused="txt_Unfocused"/>
+
+                <Button Text="Ativar Reserva" Clicked="ButtonAtivarReserva_Clicked"/>
+
+            </StackLayout>
+            
+            <StackLayout x:Name="layoutTempo" VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="Center" Spacing="10" Margin="30">
+
+                <Label Text="Tempo para liberação da mesa." FontSize="Medium"
+                HorizontalOptions="Center"/>
+
+                <Label x:Name="lblTempoLiberarMesa" Text="00:00:00" 
                 FontSize="Large" FontAttributes="None"
                 HorizontalOptions="Center"/>
 
@@ -22,15 +42,15 @@
             </StackLayout>
 
             <BoxView BackgroundColor="#C0120A" HeightRequest="1"/>
-
+            
             <ListView x:Name="lvPedidosPendentes">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="250"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.RowDefinitions>

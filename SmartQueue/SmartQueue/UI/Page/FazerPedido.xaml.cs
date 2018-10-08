@@ -78,7 +78,7 @@ namespace SmartQueue.UI.Page
 
                     dicItensPedidos = new Dictionary<int, int>();
 
-                    await DisplayAlert("Confirmação", "Pedidos registrados com sucesso.", "OK");
+                    await DisplayAlert("Confirmação", "Pedido registrado com sucesso.", "OK");
 
                     var menuReserva = this.Parent as TabbedPage;
                     menuReserva.CurrentPage = menuReserva.Children[0];

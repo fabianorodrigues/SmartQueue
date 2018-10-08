@@ -74,12 +74,16 @@ namespace SmartQueue.Controller
             }
         }
 
-        public async Task<bool> AtivarReserva()
+        public async Task<bool> AtivarReserva(int nmrMesa , string senhaDaMesa)
         {
             try
             {
                 Reserva reserva = storage.Consultar();
-                Conta conta = await service.AtivarReserva(reserva, reserva.MesaId);
+                reserva.MesaId = nmrMesa;
+
+                Conta conta = await service.AtivarReserva(reserva, senhaDaMesa);
+
+                storage.Alterar(reserva);
 
                 StorageConta storageConta = new StorageConta();
 

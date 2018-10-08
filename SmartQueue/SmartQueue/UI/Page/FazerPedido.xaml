@@ -11,7 +11,7 @@
     <ContentPage.Content>
 
         <StackLayout>
-            
+
             <Grid BackgroundColor="#C0120A">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -21,7 +21,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Button Image="icone_salvar.png" WidthRequest="50" HeightRequest="50" Grid.Column="1" Grid.Row="0" Clicked="ButtonRegistrarPedidos_Clicked"/>
+                <Button Image="icone_salvar.png" WidthRequest="24" HeightRequest="24" Grid.Column="1" Grid.Row="0" Clicked="ButtonRegistrarPedidos_Clicked"/>
 
             </Grid>
 
@@ -83,8 +83,12 @@
                                            FontAttributes="None" FontSize="Large" 
                                            VerticalOptions="Center" Margin="10"/>
                                     <Label Text="{Binding ProdutoId}" IsVisible="False"/>
-                                    <Button Text="-" HeightRequest="40" WidthRequest="50" Clicked="ButtonRemover_Clicked" BorderRadius="0"/>
-                                    <Button Text="+" HeightRequest="40" WidthRequest="50" Clicked="ButtonAdicionar_Clicked" BorderRadius="0"/>
+                                    <Button Text="-" HeightRequest="40" WidthRequest="50"
+                                            VerticalOptions="Center"
+                                            Clicked="ButtonRemover_Clicked" BorderRadius="0"/>
+                                    <Button Text="+" HeightRequest="40" WidthRequest="50" 
+                                            VerticalOptions="Center"
+                                            Clicked="ButtonAdicionar_Clicked" BorderRadius="0"/>
                                 </StackLayout>
                                 
                                 

@@ -4,8 +4,8 @@
              x:Class="SmartQueue.UI.Page.Conta"
              Title="Conta">
     <ContentPage.Content>
-        <StackLayout>
-            <Button Text="Teste" Clicked="Button_Clicked"/>
+        <StackLayout x:Name="layoutConta" IsVisible="False">
+            <Label Text="Teste conta" HorizontalOptions="Center" VerticalOptions="Center"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

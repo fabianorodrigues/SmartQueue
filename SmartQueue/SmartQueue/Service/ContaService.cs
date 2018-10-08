@@ -33,13 +33,13 @@ namespace SmartQueue.Service
             }
         }
 
-        public async Task<Pedido> RealizarPedido(Conta conta)
+        public async Task<Pedido> RealizarPedido(IEnumerable<ItemPedido> itensPedidos, int idConta)
         {
             try
             {
-                var json = JsonConvert.SerializeObject(conta);
+                var json = JsonConvert.SerializeObject(itensPedidos);
 
-                var response = await client.PostAsync(Aplicacao.Url("contas", "RealizarPedido"), Aplicacao.Content(json));
+                var response = await client.PostAsync(Aplicacao.Url("contas", "RealizarPedido", idConta.ToString()), Aplicacao.Content(json));
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<Pedido>(response.Content.ReadAsStringAsync().Result);
                 else

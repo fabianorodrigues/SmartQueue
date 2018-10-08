@@ -2,9 +2,11 @@
 using SmartQueue.Controller;
 using SmartQueue.DAL;
 using SmartQueue.Model;
+using SmartQueue.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,7 +29,7 @@ namespace SmartQueue.UI.Page
             controller = new ReservaController();
 
             segundos = 10;
-            minutos = 1;
+            minutos = 0;
             horas = 0;
 
             LiberarMesa();
@@ -62,39 +64,57 @@ namespace SmartQueue.UI.Page
 
         public void LiberarMesa()
         {
-            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-            {
-                if (reservaCancelada)
-                    return false;
-                else if (segundos == 0)
-                {
-                    if (minutos == 0)
-                    {
-                        if (horas == 0)
-                        {
-                            CrossLocalNotifications.Current.Show("Mesa Liberada.", string.Format("Ao chegar na mesa realize checkin com o número e senha da mesa."));
+            string statusReserva = new StorageReserva().Consultar().Status;
 
-                            return false;
+            if (statusReserva != "Em Fila")
+            {
+                layoutTempo.IsVisible = false;
+                if(statusReserva == "Em Uso")
+                {
+                    var menuReserva = this.Parent as TabbedPage;
+                    menuReserva.CurrentPage = menuReserva.Children[2];
+                    menuReserva.Children.RemoveAt(0);
+                }
+            }
+                
+
+            else
+            {
+                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                {
+                    if (reservaCancelada)
+                        return false;
+                    else if (segundos == 0)
+                    {
+                        if (minutos == 0)
+                        {
+                            if (horas == 0)
+                            {
+                                //CrossLocalNotifications.Current.Show("Mesa Liberada.", string.Format("Ao chegar na mesa realize checkin com o número e senha da mesa."));
+                                layoutAtivarReserva.IsVisible = true;
+                                layoutTempo.IsVisible = false;
+                                return false;
+                            }
+                            else
+                            {
+                                horas -= 1;
+                                minutos = 60;
+                            }
                         }
                         else
                         {
-                            horas -= 1;
-                            minutos = 60;
+                            minutos -= 1;
+                            segundos = 60;
                         }
+
                     }
                     else
-                    {
-                        minutos -= 1;
-                        segundos = 60;
-                    }
+                        segundos -= 1;
 
-                }
-                else
-                    segundos -= 1;
-
-                lblTempoLiberarMesa.Text = string.Format("{2}:{1}:{0}", segundos.ToString("00"), minutos.ToString("00"), horas.ToString("00"));
-                return true;
-            });
+                    lblTempoLiberarMesa.Text = string.Format("{2}:{1}:{0}", segundos.ToString("00"), minutos.ToString("00"), horas.ToString("00"));
+                    return true;
+                });
+            }
         }
 
         private async void CancelarReserva()
@@ -121,9 +141,53 @@ namespace SmartQueue.UI.Page
                 
         }
 
+        private async Task<bool> ValidaAtivarReserva()
+        {
+            if(string.IsNullOrEmpty(txtNmrMesa.Text) || string.IsNullOrEmpty(txtSenhaMesa.Text))
+            {
+                await DisplayAlert("Atenção", "Digite a senha e o número da mesa corretamente.", "OK");
+                return false;
+            }
+            else if (txtSenhaMesa.Text.Length < 6)
+            {
+                await DisplayAlert("Senha inválida", "A senha deve ter ao menos 6 dígitos.", "Ok");
+                return false;
+            }
+
+            return true;
+        }
+
+        private async void AtivarReserva()
+        {         
+            try
+            {
+                if (await controller.AtivarReserva(int.Parse(txtNmrMesa.Text), txtSenhaMesa.Text))
+                {
+                    var menuReserva = this.Parent as TabbedPage;
+                    menuReserva.CurrentPage = menuReserva.Children[2];
+                    menuReserva.Children.RemoveAt(0);
+                }            
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "Ok");
+            }
+        }
+
         private void CancelarReserva_Clicked(object sender, EventArgs e)
         {
             CancelarReserva();
+        }
+
+        private void txt_Focused(object sender, FocusEventArgs e)
+        {
+            Aplicacao.MostrarLabel(true, (Entry)sender);
+        }
+
+        private void txt_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (((Entry)sender).Text == string.Empty || ((Entry)sender).Text == null)
+                Aplicacao.MostrarLabel(false, (Entry)sender);
         }
 
         protected override void OnAppearing()
@@ -136,6 +200,11 @@ namespace SmartQueue.UI.Page
         {
             base.OnDisappearing();
             lvPedidosPendentes.ItemsSource = null;
+        }
+
+        private void ButtonAtivarReserva_Clicked(object sender, EventArgs e)
+        {
+            AtivarReserva();
         }
     }
 }

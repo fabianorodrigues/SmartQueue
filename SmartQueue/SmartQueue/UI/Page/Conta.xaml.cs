@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartQueue.Controller;
+using SmartQueue.DAL;
+using System;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,15 +10,46 @@ namespace SmartQueue.UI.Page
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Conta : ContentPage
 	{
+        private ContaController controller;
+
 		public Conta ()
 		{
 			InitializeComponent ();
+
+            controller = new ContaController();
 		}
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void VerificaContaAberta()
         {
-            var menuReserva = this.Parent as TabbedPage;
-            menuReserva.CurrentPage = menuReserva.Children[0];
+            if(layoutConta.IsVisible == false)
+            {
+                if (new StorageConta().Count() > 0)
+                    RealizarPedidosAberturaConta();
+            }
+            
+        }
+
+        private async void RealizarPedidosAberturaConta()
+        {
+            try
+            {
+                if(await controller.RealizarPedido())
+                {
+                    await DisplayAlert("Confirmação", "Pedido(s) pendente(s) realizado(s) com sucesso.", "OK");
+                    layoutConta.IsVisible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "OK");
+            }
+        }    
+
+        protected override void OnAppearing()
+        {            
+            base.OnAppearing();
+
+            VerificaContaAberta();
         }
     }
 }

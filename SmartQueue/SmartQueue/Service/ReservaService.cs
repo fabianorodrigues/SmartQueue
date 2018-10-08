@@ -55,13 +55,13 @@ namespace SmartQueue.Service
 
         }
 
-        public async Task<Conta> AtivarReserva(Reserva reserva, int numeroDaMesa)
+        public async Task<Conta> AtivarReserva(Reserva reserva, string senhaDaMesa)
         {
             try
             {
                 var json = JsonConvert.SerializeObject(reserva);
 
-                var response = await client.PostAsync(Aplicacao.Url("reservas", "AtivarReserva", numeroDaMesa.ToString()), 
+                var response = await client.PostAsync(Aplicacao.Url("reservas", "AtivarReserva", senhaDaMesa), 
                     Aplicacao.Content(json));
 
                 if (response.IsSuccessStatusCode)
