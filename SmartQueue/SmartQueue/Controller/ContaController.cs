@@ -30,7 +30,7 @@ namespace SmartQueue.Controller
 
                 foreach (var item in pedidos)
                 {
-                    var split = item.Split('-');
+                    var split = item.Split('=');
                     retorno.Add(split[0], split[1]);
                 }
 
@@ -126,15 +126,10 @@ namespace SmartQueue.Controller
             {
                 Conta conta = await service.FecharConta(new StorageReserva().Consultar().Id);
 
-                if (conta.DataFechamento != DateTime.MinValue)
-                {
-                    storage.Excluir();
-                    new StorageReserva().Excluir();
+                storage.Excluir();
+                new StorageReserva().Excluir();
 
-                    return true;
-                }
-                else
-                    return false;
+                return true;
             }
             catch (Exception ex)
             {

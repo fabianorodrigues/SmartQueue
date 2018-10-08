@@ -4,7 +4,7 @@
              x:Class="SmartQueue.UI.Page.Reserva"
              Title="Reserva">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="3">
 
             <StackLayout x:Name="layoutAtivarReserva" VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="Center" Spacing="10" Margin="30" IsVisible="False">
@@ -53,10 +53,8 @@
                 </Grid.RowDefinitions>
 
                 <Label Text="Pedido" Grid.Column="0" Grid.Row="0" 
-                       TextColor="Black"
                        FontSize="Medium"/>
                 <Label Text="Qtd" Grid.Column="1" Grid.Row="0" 
-                       TextColor="Black"
                        FontSize="Medium"/>
                 
             </Grid>
@@ -80,15 +78,17 @@
                                 </Grid.RowDefinitions>
                                 
                                 <Label Text="{Binding Path=Key}" 
-                                       FontSize="Large"
+                                       FontSize="Default"
                                        LineBreakMode="TailTruncation" 
                                        Grid.Column="0" Grid.Row="0" 
-                                       TextColor="Black"/>
+                                       TextColor="Black"
+                                       FontAttributes="None"/>
                                 
                                 <Label Text="{Binding Path=Value}"
-                                       FontSize="Large"
+                                       FontSize="Default"
                                        Grid.Column="1" Grid.Row="0"
-                                       TextColor="#B3B3B3" FontAttributes="Bold"/>
+                                       TextColor="Black" 
+                                       FontAttributes="None"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

@@ -22,11 +22,9 @@
                 </Grid.RowDefinitions>
 
                 <Label Text="Pedido" Grid.Column="0" Grid.Row="0" 
-                       TextColor="Black"
-                       FontSize="Medium"/>
-                <Label Text="Qtd" Grid.Column="1" Grid.Row="0" 
-                       TextColor="Black"
-                       FontSize="Medium"/>
+                       FontSize="Large"/>
+                <Label Text="Valor" Grid.Column="1" Grid.Row="0" 
+                       FontSize="Large"/>
 
             </Grid>
 
@@ -50,11 +48,13 @@
                                        FontSize="Medium"
                                        LineBreakMode="TailTruncation" 
                                        Grid.Column="0" Grid.Row="0"
+                                       FontAttributes="None"
                                        TextColor="Black"/>
 
                                 <Label Text="{Binding Path=Value}"
                                        FontSize="Medium"
                                        Grid.Column="1" Grid.Row="0"
+                                       FontAttributes="None"
                                        TextColor="#B3B3B3"/>
                             </Grid>
                         </ViewCell>
