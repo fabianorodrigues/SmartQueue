@@ -84,10 +84,10 @@
                                            FontAttributes="None" FontSize="Large" 
                                            VerticalOptions="Center" Margin="10"/>
                                     <Label Text="{Binding ProdutoId}" IsVisible="False"/>
-                                    <Button Text="-" HeightRequest="40" WidthRequest="50"
+                                    <Button Text="-" HeightRequest="60" WidthRequest="50"
                                             VerticalOptions="Center"
                                             Clicked="ButtonRemover_Clicked" BorderRadius="0"/>
-                                    <Button Text="+" HeightRequest="40" WidthRequest="50" 
+                                    <Button Text="+" HeightRequest="60" WidthRequest="50" 
                                             VerticalOptions="Center"
                                             Clicked="ButtonAdicionar_Clicked" BorderRadius="0"/>
                                 </StackLayout>
