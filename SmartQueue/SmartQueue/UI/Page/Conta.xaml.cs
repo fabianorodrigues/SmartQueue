@@ -65,6 +65,26 @@ namespace SmartQueue.UI.Page
                 {
                     lblPedidos.IsVisible = false;
                     lvConta.ItemsSource = dicConta;
+
+                    decimal total = await controller.ValorTotalDaConta();
+                    lblValorTotal.Text = total.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "OK");
+            }
+        }
+
+        private async void FecharConta()
+        {
+            try
+            {
+                if(await controller.FecharConta())
+                {
+                    contaFechada = true;
+                    await Navigation.PopAsync(true);
+                    await DisplayAlert("Confirmação", "Obrigado e volte sempre!", "OK");
                 }
             }
             catch (Exception ex)
@@ -75,7 +95,7 @@ namespace SmartQueue.UI.Page
 
         private void VerificaPedidosFinalizados()
         {
-            Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
                 if (contaFechada || !threadAtivada)
                     return false;
@@ -100,6 +120,11 @@ namespace SmartQueue.UI.Page
             base.OnDisappearing();
 
             threadAtivada = false;
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            FecharConta();
         }
     }
 }

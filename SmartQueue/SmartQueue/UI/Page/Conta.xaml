@@ -4,14 +4,30 @@
              x:Class="SmartQueue.UI.Page.Conta"
              Title="Conta">
     <ContentPage.Content>
-        <StackLayout x:Name="layoutConta" IsVisible="False">
+        <StackLayout x:Name="layoutConta" IsVisible="False" Margin="2">
 
             <Label  x:Name="lblPedidos"
-                Text="Pedidos ainda não finalizados" 
+                Text="Não há pedidos finalizados" 
                     FontSize="Medium" 
                     HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
             
-            <ListView x:Name="lvConta">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+            </Grid>
+
+            <Label Text="Pedido" Grid.Column="0" Grid.Row="0"/>
+            <Label Text="Qtd" Grid.Column="1" Grid.Row="0"/>
+
+            <BoxView BackgroundColor="#C0120A" HeightRequest="1"/>
+
+            <ListView x:Name="lvConta" Margin="2">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -28,16 +44,30 @@
                                 <Label Text="{Binding Path=Key}" 
                                        FontSize="Medium"
                                        LineBreakMode="TailTruncation" 
-                                       Grid.Column="0" Grid.Row="0" />
+                                       Grid.Column="0" Grid.Row="0"
+                                       TextColor="Black"/>
 
                                 <Label Text="{Binding Path=Value}"
                                        FontSize="Medium"
-                                       Grid.Column="1" Grid.Row="0"/>
+                                       Grid.Column="1" Grid.Row="0"
+                                       TextColor="#B3B3B3"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-                </ListView>
+            </ListView>
+
+            <StackLayout Margin="5">
+                
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="Total R$ " FontSize="Medium"/>
+                    <Label x:Name="lblValorTotal" Text="0,00" TextColor="#B3B3B3" FontAttributes="Bold" FontSize="Medium"/>
+                </StackLayout>
+                    
+                <Button Text="Fechar Conta" Clicked="Button_Clicked"/>
+                
+            </StackLayout>
+
         </StackLayout>
             
     </ContentPage.Content>

@@ -41,9 +41,24 @@
 
             </StackLayout>
 
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+            </Grid>
+
+            <Label Text="Pedido" Grid.Column="0" Grid.Row="0" TextColor="Black"/>
+            <Label Text="Qtd" Grid.Column="1" Grid.Row="0" TextColor="Black"/>
+
             <BoxView BackgroundColor="#C0120A" HeightRequest="1"/>
             
-            <ListView x:Name="lvPedidosPendentes">
+            <ListView x:Name="lvPedidosPendentes" Margin="2">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -60,11 +75,13 @@
                                 <Label Text="{Binding Path=Key}" 
                                        FontSize="Large"
                                        LineBreakMode="TailTruncation" 
-                                       Grid.Column="0" Grid.Row="0" />
+                                       Grid.Column="0" Grid.Row="0" 
+                                       TextColor="Black"/>
                                 
                                 <Label Text="{Binding Path=Value}"
                                        FontSize="Large"
-                                       Grid.Column="1" Grid.Row="0"/>
+                                       Grid.Column="1" Grid.Row="0"
+                                       TextColor="#B3B3B3" FontAttributes="Bold"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

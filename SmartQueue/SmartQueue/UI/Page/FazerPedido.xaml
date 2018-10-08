@@ -22,7 +22,7 @@
                 </Grid.RowDefinitions>
 
                 <Button Image="icone_salvar.png" WidthRequest="35" HeightRequest="35" Grid.Column="1" Grid.Row="0" 
-                        Clicked="ButtonRegistrarPedidos_Clicked" BackgroundColor="#AA0E09"/>
+                        Clicked="ButtonRegistrarPedidos_Clicked" BackgroundColor="#AA0E09" BorderColor="#AA0E09"/>
 
             </Grid>
 

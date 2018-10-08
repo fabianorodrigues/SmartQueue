@@ -42,6 +42,20 @@ namespace SmartQueue.Controller
             }
         }
 
+        public async Task<decimal> ValorTotalDaConta()
+        {
+            try
+            {
+                Historico historico = await service.ConsultarConta(new StorageReserva().Consultar().Id);
+
+                return historico.Valor;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<bool> RealizarPedido(Dictionary<int, int> dicItensPedidos)
         {
             List<ItemPedido> listaItens = new List<ItemPedido>();
@@ -106,9 +120,27 @@ namespace SmartQueue.Controller
             return await service.FinalizarPedido(idPedido);
         }
 
-        public async Task<Conta> FecharConta(int idReserva)
+        public async Task<bool> FecharConta()
         {
-            return await service.FecharConta(idReserva);
+            try
+            {
+                Conta conta = await service.FecharConta(new StorageReserva().Consultar().Id);
+
+                if (conta.DataFechamento != DateTime.MinValue)
+                {
+                    storage.Excluir();
+                    new StorageReserva().Excluir();
+
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
     }
 }
