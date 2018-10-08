@@ -75,7 +75,7 @@ namespace SmartQueue.UI.Page
             {
                 if(dicItensPedidos != null)
                 {
-                    if(new StorageConta().Count() < 0)
+                    if(new StorageReserva().Consultar().Status == "Em Fila")
                     {
                         new ReservaController().RegistrarPedidos(dicItensPedidos);
                         var menuReserva = this.Parent as TabbedPage;

@@ -5,7 +5,34 @@
              Title="Conta">
     <ContentPage.Content>
         <StackLayout x:Name="layoutConta" IsVisible="False">
-            <Label Text="Teste conta" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+            <<ListView x:Name="lvConta">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Text="{Binding Path=Key}" 
+                                       FontSize="Medium"
+                                       LineBreakMode="TailTruncation" 
+                                       Grid.Column="0" Grid.Row="0" />
+
+                                <Label Text="{Binding Path=Value}"
+                                       FontSize="Medium"
+                                       Grid.Column="1" Grid.Row="0"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -18,9 +18,28 @@ namespace SmartQueue.Controller
             storage = new StorageConta();
         }
 
-        public async Task<Historico> ConsultarConta(int idReserva)
+        public async Task<Dictionary<string, string>> ConsultarConta()
         {
-            return await service.ConsultarConta(idReserva);
+            try
+            {
+                Historico historico = await service.ConsultarConta(new StorageReserva().Consultar().Id);
+
+                var pedidos = historico.Pedidos.Split('|');
+
+                Dictionary<string, string> retorno = new Dictionary<string, string>();
+
+                foreach (var item in pedidos)
+                {
+                    var split = item.Split('-');
+                    retorno.Add(split[0], split[1]);
+                }
+
+                return retorno;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<bool> RealizarPedido(Dictionary<int, int> dicItensPedidos)
