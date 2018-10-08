@@ -87,7 +87,11 @@ namespace SmartQueue.UI.Page
                 };
 
                 if (await controller.Cadastrar(usuario))
-                    await Navigation.PushAsync(new Master.Menu());
+                {
+                    await DisplayAlert("Confirmação", "Cadastro realizado com sucesso.", "OK");
+                    await Navigation.PopAsync(true);
+                }
+                   
                 else
                     throw new ApplicationException("Não foi possível realizar o cadastro.\nPor favor, tente novamente mais tarde.");
             }

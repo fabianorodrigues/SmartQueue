@@ -6,6 +6,11 @@
     <ContentPage.Content>
         <StackLayout x:Name="layoutConta" IsVisible="False">
 
+            <Label  x:Name="lblPedidos"
+                Text="Pedidos ainda não finalizados" 
+                    FontSize="Medium" 
+                    HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+            
             <ListView x:Name="lvConta">
                 <ListView.ItemTemplate>
                     <DataTemplate>

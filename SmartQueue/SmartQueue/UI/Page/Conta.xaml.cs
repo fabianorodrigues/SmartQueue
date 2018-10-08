@@ -1,7 +1,7 @@
 ﻿using SmartQueue.Controller;
 using SmartQueue.DAL;
 using System;
-
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,6 +11,8 @@ namespace SmartQueue.UI.Page
 	public partial class Conta : ContentPage
 	{
         private ContaController controller;
+        private bool threadAtivada;
+        private bool contaFechada;
 
 		public Conta ()
 		{
@@ -21,12 +23,16 @@ namespace SmartQueue.UI.Page
 
         private void VerificaContaAberta()
         {
-            if(layoutConta.IsVisible == false)
+            if (layoutConta.IsVisible == false)
             {
                 if (new StorageConta().Count() > 0 && new StorageItemPedido().Count() > 0)
                     RealizarPedidosAberturaConta();
             }
-            
+            else if (!threadAtivada)
+            {
+                threadAtivada = true;
+                VerificaPedidosFinalizados();
+            }    
         }
 
         private async void RealizarPedidosAberturaConta()
@@ -37,7 +43,8 @@ namespace SmartQueue.UI.Page
                 {
                     await DisplayAlert("Confirmação", "Pedido(s) pendente(s) realizado(s) com sucesso.", "OK");
                     layoutConta.IsVisible = true;
-                    VerificaPedidosFinalizados();
+                    threadAtivada = true;
+                    VerificaPedidosFinalizados();                                    
                 }
             }
             catch (Exception ex)
@@ -46,59 +53,39 @@ namespace SmartQueue.UI.Page
             }
         }
 
-        public void VerificaPedidosFinalizados()
+        private async void ExibePedidos()
         {
-            //string statusReserva = new StorageReserva().Consultar().Status;
+            try
+            {
+                Dictionary<string,string> dicConta = await controller.ConsultarConta();
 
-            //if (statusReserva != "Em Fila")
-            //{
-            //    layoutTempo.IsVisible = false;
-            //    if (statusReserva == "Em Uso")
-            //    {
-            //        var menuReserva = this.Parent as TabbedPage;
-            //        menuReserva.CurrentPage = menuReserva.Children[2];
-            //        menuReserva.Children.RemoveAt(0);
-            //    }
-            //}
+                if (dicConta.Keys.Count <= 0)
+                    lblPedidos.IsVisible = true;
+                else
+                {
+                    lblPedidos.IsVisible = false;
+                    lvConta.ItemsSource = dicConta;
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "OK");
+            }
+        }
 
+        private void VerificaPedidosFinalizados()
+        {
+            Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+            {
+                if (contaFechada || !threadAtivada)
+                    return false;
+                else
+                {
+                    ExibePedidos();
+                }
 
-            //else
-            //{
-            //    Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-            //    {
-            //        if (reservaCancelada)
-            //            return false;
-            //        else if (segundos == 0)
-            //        {
-            //            if (minutos == 0)
-            //            {
-            //                if (horas == 0)
-            //                {
-            //                    //CrossLocalNotifications.Current.Show("Mesa Liberada.", string.Format("Ao chegar na mesa realize checkin com o número e senha da mesa."));
-            //                    layoutAtivarReserva.IsVisible = true;
-            //                    layoutTempo.IsVisible = false;
-            //                    return false;
-            //                }
-            //                else
-            //                {
-            //                    horas -= 1;
-            //                    minutos = 60;
-            //                }
-            //            }
-            //            else
-            //            {
-            //                minutos -= 1;
-            //                segundos = 60;
-            //            }
-
-            //        }
-            //        else
-            //            segundos -= 1;
-
-            //        lblTempoLiberarMesa.Text = string.Format("{2}:{1}:{0}", segundos.ToString("00"), minutos.ToString("00"), horas.ToString("00"));
-            //        return true;
-            //    });
-            //}
+                return true;
+            });
         }
 
         protected override void OnAppearing()
@@ -106,6 +93,13 @@ namespace SmartQueue.UI.Page
             base.OnAppearing();
 
             VerificaContaAberta();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            threadAtivada = false;
         }
     }
 }
