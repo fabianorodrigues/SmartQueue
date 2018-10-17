@@ -80,7 +80,7 @@ namespace SmartQueue.Service
         {
             try
             {
-                var response = await client.GetAsync(Aplicacao.Url("reservas", "ConsultarTempo", quantidadePessoas.ToString()));
+                var response = await client.GetAsync("http://sqpythonia.azurewebsites.net/run");
 
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<string>(response.Content.ReadAsStringAsync().Result);
