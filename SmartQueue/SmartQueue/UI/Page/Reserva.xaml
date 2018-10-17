@@ -6,94 +6,93 @@
     <ContentPage.Content>
         <StackLayout Margin="3">
 
-            <StackLayout x:Name="layoutAtivarReserva" VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="Center" Spacing="10" Margin="30" IsVisible="False">
+            <StackLayout VerticalOptions="StartAndExpand" 
+                HorizontalOptions="Center" Spacing="10" Margin="20">
 
                 <Label x:Name="lblInformacaoAtivar" Text="Ativar Reserva" FontSize="Large"
-                HorizontalOptions="Center"/>
+                HorizontalOptions="Center" IsVisible="False"/>
 
-                <Label Text="Nº da mesa" IsVisible="False" Margin="5,0,0,0"/>
+                <Label x:Name="lblNmrMesa" Text="Nº da mesa" IsVisible="False" Margin="5,0,0,0"/>
                 <Entry Placeholder="Nº da mesa" x:Name="txtNmrMesa" 
                        Focused="txt_Focused" 
                        Unfocused="txt_Unfocused"
-                       Keyboard="Numeric"/>
+                       Keyboard="Numeric"
+                       IsVisible="False"/>
 
-                <Label Text="Senha da mesa" IsVisible="False" Margin="5,0,0,0"/>
+                <Label x:Name="lblSenhaMesa" Text="Senha da mesa" IsVisible="False" Margin="5,0,0,0"/>
                 <Entry Placeholder="Senha da mesa" x:Name="txtSenhaMesa" 
                        Focused="txt_Focused" 
-                       Unfocused="txt_Unfocused"/>
+                       Unfocused="txt_Unfocused"
+                       IsVisible="False"/>
 
-                <Button Text="Ativar Reserva" Clicked="ButtonAtivarReserva_Clicked"/>
+                <Button x:Name="btnAtivar" Text="Ativar Reserva" Clicked="ButtonAtivarReserva_Clicked"
+                        IsVisible="False"/>
 
-            </StackLayout>
-            
-            <StackLayout x:Name="layoutTempo" VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="Center" Spacing="10" Margin="30">
-
-                <Label Text="Tempo para liberação da mesa." FontSize="Medium"
+                <Label x:Name="lblInformacaoTempo" Text="Tempo para liberação da mesa." FontSize="Medium"
                 HorizontalOptions="Center"/>
 
                 <Label x:Name="lblTempoLiberarMesa" Text="00:00:00" 
                 FontSize="Large" FontAttributes="None"
                 HorizontalOptions="Center"/>
 
-                <Button Text="Cancelar Reserva" Clicked="CancelarReserva_Clicked"/>
+                <Button x:Name="btnCancelar" Text="Cancelar Reserva" Clicked="CancelarReserva_Clicked"/>
 
             </StackLayout>
 
+            <StackLayout x:Name="layoutPedidosPendentes" IsVisible="False">
+                <BoxView BackgroundColor="#C0120A" HeightRequest="1"/>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+                <Grid Margin="5,0,5,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                <Label Text="Pedido" Grid.Column="0" Grid.Row="0" 
+                    <Label Text="Pedido" Grid.Column="0" Grid.Row="0" 
                        FontSize="Medium"/>
-                <Label Text="Qtd" Grid.Column="1" Grid.Row="0" 
+                    <Label Text="Qtd" Grid.Column="1" Grid.Row="0" 
                        FontSize="Medium"/>
-                
-            </Grid>
+                </Grid>
 
-            
+                <BoxView BackgroundColor="#C0120A" HeightRequest="1"/>
 
-            <BoxView BackgroundColor="#C0120A" HeightRequest="1"/>
-            
-            <ListView x:Name="lvPedidosPendentes" Margin="2">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                <ListView x:Name="lvPedidosPendentes" Margin="2,0,2,0" 
+                          SeparatorVisibility="Default" SeparatorColor="Black">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                
-                                <Label Text="{Binding Path=Key}" 
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Label Text="{Binding Path=Key}" 
                                        FontSize="Default"
                                        LineBreakMode="TailTruncation" 
                                        Grid.Column="0" Grid.Row="0" 
                                        TextColor="Black"
                                        FontAttributes="None"/>
-                                
-                                <Label Text="{Binding Path=Value}"
+
+                                    <Label Text="{Binding Path=Value}"
                                        FontSize="Default"
                                        Grid.Column="1" Grid.Row="0"
                                        TextColor="Black" 
                                        FontAttributes="None"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
 
         </StackLayout>
     </ContentPage.Content>

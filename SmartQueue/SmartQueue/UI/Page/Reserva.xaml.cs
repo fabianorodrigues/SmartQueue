@@ -28,11 +28,7 @@ namespace SmartQueue.UI.Page
 			InitializeComponent();
             controller = new ReservaController();
 
-            segundos = 10;
-            minutos = 0;
-            horas = 0;
-
-            LiberarMesa();
+            ConsultarTempo();             
 
         }
 
@@ -40,81 +36,107 @@ namespace SmartQueue.UI.Page
         {
             if(lvPedidosPendentes.ItemsSource == null)
             {
-                List<Produto> produtos = await new ProdutoController().ListarProdutos();
                 List<ItemPedido> itens = controller.ItensPedidosPendentes();
 
-                dicListaItensPendentes = new Dictionary<string, int>();
-
-                foreach (var item in itens)
+                if (itens.Count > 0)
                 {
-                    var produto = produtos.First(x => x.Id == item.ProdutoId);
-                    dicListaItensPendentes.Add(produto.Nome, item.Quantidade);
+                    List<Produto> produtos = await new ProdutoController().ListarProdutos();
+
+                    dicListaItensPendentes = new Dictionary<string, int>();
+
+                    foreach (var item in itens)
+                    {
+                        var produto = produtos.First(x => x.Id == item.ProdutoId);
+                        dicListaItensPendentes.Add(produto.Nome, item.Quantidade);
+                    }
+
+                    lvPedidosPendentes.ItemsSource = dicListaItensPendentes;
+
+                    layoutPedidosPendentes.IsVisible = true;
                 }
+                else
+                    layoutPedidosPendentes.IsVisible = false;
 
-
-                lvPedidosPendentes.ItemsSource = dicListaItensPendentes;
+                
             }
             
         }
 
-        //public async void ConsultarTempo()
-        //{
-        //    lblInfoReserva.Text = await controller.ConsultarTempo();
-        //}
-
-        public void LiberarMesa()
+        public async void ConsultarTempo()
         {
-            string statusReserva = new StorageReserva().Consultar().Status;
-
-            if (statusReserva != "Em Fila")
+            try
             {
-                layoutTempo.IsVisible = false;
-                if(statusReserva == "Em Uso")
+                string statusReserva = new StorageReserva().Consultar().Status;
+
+                if (statusReserva == "Em Uso")
                 {
+                    ComponentesAtivarMesa(true);
+                    ComponentesTempo(false);
+
                     var menuReserva = this.Parent as TabbedPage;
                     menuReserva.CurrentPage = menuReserva.Children[2];
                     menuReserva.Children.RemoveAt(0);
                 }
-            }
-                
-
-            else
-            {
-                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                else
                 {
-                    if (reservaCancelada)
-                        return false;
-                    else if (segundos == 0)
+                    TimeSpan tempo = await controller.ConsultarTempo();
+                    horas = tempo.Hours;
+                    minutos = tempo.Minutes;
+                    segundos = tempo.Seconds;
+
+                    //horas = 0;
+                    //minutos = 0;
+                    //segundos = 10;
+
+                    LiberarMesa();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "Ok");
+                await Navigation.PopAsync();
+            }
+            
+        }
+
+        public void LiberarMesa()
+        {  
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                if (reservaCancelada)
+                    return false;
+                else if (segundos == 0)
+                {
+                    if (minutos == 0)
                     {
-                        if (minutos == 0)
+                        if (horas == 0)
                         {
-                            if (horas == 0)
-                            {
-                                //CrossLocalNotifications.Current.Show("Mesa Liberada.", string.Format("Ao chegar na mesa realize checkin com o número e senha da mesa."));
-                                layoutAtivarReserva.IsVisible = true;
-                                layoutTempo.IsVisible = false;
-                                return false;
-                            }
-                            else
-                            {
-                                horas -= 1;
-                                minutos = 60;
-                            }
+                            //CrossLocalNotifications.Current.Show("Mesa Liberada.", string.Format("Ao chegar na mesa realize checkin com o número e senha da mesa."));
+                            ComponentesAtivarMesa(true);
+                            ComponentesTempo(false);
+                            return false;
                         }
                         else
                         {
-                            minutos -= 1;
-                            segundos = 60;
+                            horas -= 1;
+                            minutos = 60;
                         }
-
                     }
                     else
-                        segundos -= 1;
+                    {
+                        minutos -= 1;
+                        segundos = 60;
+                    }
 
-                    lblTempoLiberarMesa.Text = string.Format("{2}:{1}:{0}", segundos.ToString("00"), minutos.ToString("00"), horas.ToString("00"));
-                    return true;
-                });
-            }
+                }
+                else
+                    segundos -= 1;
+
+                lblTempoLiberarMesa.Text = string.Format("{2}:{1}:{0}", segundos.ToString("00"), minutos.ToString("00"), horas.ToString("00"));
+                return true;
+            });
+            
         }
 
         private async void CancelarReserva()
@@ -173,6 +195,21 @@ namespace SmartQueue.UI.Page
                 await DisplayAlert("Erro", ex.Message, "Ok");
             }
         }
+
+        public void ComponentesAtivarMesa(bool visible)
+        {
+            lblInformacaoAtivar.IsVisible = visible;
+            txtNmrMesa.IsVisible = visible;
+            txtSenhaMesa.IsVisible = visible;
+            btnAtivar.IsVisible = visible;
+        }
+
+        public void ComponentesTempo(bool visible)
+        {
+            lblInformacaoTempo.IsVisible = visible;
+            lblTempoLiberarMesa.IsVisible = visible;
+        }
+
 
         private void CancelarReserva_Clicked(object sender, EventArgs e)
         {

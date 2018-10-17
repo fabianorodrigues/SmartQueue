@@ -88,12 +88,15 @@ namespace SmartQueue.Controller
         {
             try
             {
-               storage.Excluir();
+                new StorageConta().Excluir();
+                new StorageItemPedido().ExcluirTodos();
+                new StorageReserva().Excluir();
+                storage.Excluir();
 
-                if (storage.Count() > 0)
+                 if (storage.Count() > 0)
                     new ApplicationException("Erro desconhecido, tente novamente.");
 
-                return true;
+                 return true;
             }
             catch (Exception ex)
             {

@@ -4,73 +4,76 @@
              x:Class="SmartQueue.UI.Page.Conta"
              Title="Conta">
     <ContentPage.Content>
-        <StackLayout x:Name="layoutConta" IsVisible="False" Margin="2">
+        <StackLayout Margin="2">
 
             <Label  x:Name="lblPedidos"
-                Text="Não há pedidos finalizados" 
+                Text="Não há pedidos finalizados." 
                     FontSize="Medium" 
                     HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+            <StackLayout x:Name="layoutConta" IsVisible="False">
+                <Grid Margin="5,0,5,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                <Label Text="Pedido" Grid.Column="0" Grid.Row="0" 
+                    <Label Text="Pedido" Grid.Column="0" Grid.Row="0" 
                        FontSize="Large"/>
-                <Label Text="Valor" Grid.Column="1" Grid.Row="0" 
+                    <Label Text="Valor" Grid.Column="1" Grid.Row="0" 
                        FontSize="Large"/>
 
-            </Grid>
+                </Grid>
 
-            <BoxView BackgroundColor="#C0120A" HeightRequest="1"/>
+                <BoxView BackgroundColor="#C0120A" HeightRequest="1"/>
 
-            <ListView x:Name="lvConta" Margin="2">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                <ListView x:Name="lvConta" Margin="2,0,2,0" 
+                      SeparatorVisibility="Default" SeparatorColor="Black">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
 
-                                <Label Text="{Binding Path=Key}" 
+                                    <Label Text="{Binding Path=Key}" 
                                        FontSize="Medium"
                                        LineBreakMode="TailTruncation" 
                                        Grid.Column="0" Grid.Row="0"
                                        FontAttributes="None"
                                        TextColor="Black"/>
 
-                                <Label Text="{Binding Path=Value}"
+                                    <Label Text="{Binding Path=Value}"
                                        FontSize="Medium"
                                        Grid.Column="1" Grid.Row="0"
                                        FontAttributes="None"
-                                       TextColor="#B3B3B3"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                       TextColor="Black"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
-            <StackLayout Margin="5">
-                
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="Total R$ " FontSize="Medium"/>
-                    <Label x:Name="lblValorTotal" Text="0,00" TextColor="#B3B3B3" FontAttributes="Bold" FontSize="Medium"/>
+                <StackLayout Margin="5">
+
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="Total R$ " FontSize="Medium"/>
+                        <Label x:Name="lblValorTotal" Text="0,00" TextColor="Black" FontAttributes="None" FontSize="Medium"/>
+                    </StackLayout>
+
+                    <Button Text="Fechar Conta" Clicked="Button_Clicked"/>
+
                 </StackLayout>
-                    
-                <Button Text="Fechar Conta" Clicked="Button_Clicked"/>
-                
             </StackLayout>
 
         </StackLayout>

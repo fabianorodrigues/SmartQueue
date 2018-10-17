@@ -83,7 +83,7 @@ namespace SmartQueue.Service
                 var response = await client.GetAsync(Aplicacao.Url("reservas", "ConsultarTempo", quantidadePessoas.ToString()));
 
                 if (response.IsSuccessStatusCode)
-                    return response.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<string>(response.Content.ReadAsStringAsync().Result);
                 else
                     throw new ApplicationException(response.Content.ReadAsStringAsync().Result);
             }

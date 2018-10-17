@@ -23,12 +23,28 @@ namespace SmartQueue.UI.Page
 
         private async void VerificaContaAberta()
         {
-            if (layoutConta.IsVisible == false)
+            if (new StorageConta().Count() > 0 && layoutConta.IsVisible == false)
             {
-                if (new StorageConta().Count() > 0 && new StorageItemPedido().Count() > 0)
+                if (new StorageItemPedido().Count() > 0)
                     RealizarPedidosAberturaConta();
+
+                else if(new StorageReserva().Consultar().Status == "Em Uso")
+                {
+                    Dictionary<string, string> dicConta = await controller.ConsultarConta();
+                    if (dicConta.Keys.Count > 0)
+                    {
+                        lblPedidos.IsVisible = false;
+                        layoutConta.IsVisible = true;
+                        threadAtivada = true;
+                        VerificaPedidosFinalizados();
+                    }
+                    else
+                        lblPedidos.IsVisible = true;
+
+                }
+                    
                 else
-                    await DisplayAlert("Não há pedidos finalizados.", "A conta só estará disponivel após ter algum pedido finalizado.", "OK");
+                    lblPedidos.IsVisible = true;
             }
             else if (!threadAtivada)
             {
@@ -62,7 +78,7 @@ namespace SmartQueue.UI.Page
                 Dictionary<string,string> dicConta = await controller.ConsultarConta();
 
                 if (dicConta.Keys.Count <= 0)
-                    lblPedidos.IsVisible = true;
+                    lblPedidos.IsVisible = true;                 
                 else
                 {
                     lblPedidos.IsVisible = false;
@@ -79,19 +95,23 @@ namespace SmartQueue.UI.Page
         }
 
         private async void FecharConta()
-        {
+        {           
             try
             {
-                if(await controller.FecharConta())
+                threadAtivada = false;
+
+                if (await controller.FecharConta())
                 {
                     contaFechada = true;
                     await Navigation.PopAsync(true);
+
                     await DisplayAlert("Confirmação", "Obrigado e volte sempre!", "OK");
                 }
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Erro", ex.Message, "OK");
+                threadAtivada = true;
             }
         }
 
@@ -102,9 +122,7 @@ namespace SmartQueue.UI.Page
                 if (contaFechada || !threadAtivada)
                     return false;
                 else
-                {
                     ExibePedidos();
-                }
 
                 return true;
             });

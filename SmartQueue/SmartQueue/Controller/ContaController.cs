@@ -22,11 +22,15 @@ namespace SmartQueue.Controller
         {
             try
             {
+                Dictionary<string, string> retorno = new Dictionary<string, string>();
+
                 Historico historico = await service.ConsultarConta(new StorageReserva().Consultar().Id);
 
-                var pedidos = historico.Pedidos.Split('|');
+                if (historico.Pedidos == string.Empty)
+                    return retorno;
 
-                Dictionary<string, string> retorno = new Dictionary<string, string>();
+                var pedidos = historico.Pedidos.Split('|');
+             
 
                 foreach (var item in pedidos)
                 {
@@ -126,10 +130,16 @@ namespace SmartQueue.Controller
             {
                 Conta conta = await service.FecharConta(new StorageReserva().Consultar().Id);
 
-                storage.Excluir();
-                new StorageReserva().Excluir();
+                if (conta != null)
+                {
+                    storage.Excluir();
+                    new StorageReserva().Excluir();
 
-                return true;
+                    return true;
+                }
+                else
+                    throw new ApplicationException("Erro desconhecido, tente novamente.");
+                
             }
             catch (Exception ex)
             {

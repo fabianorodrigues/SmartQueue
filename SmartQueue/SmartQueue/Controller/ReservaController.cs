@@ -61,8 +61,9 @@ namespace SmartQueue.Controller
                 if (storage.Count() <= 0)
                     return true;
 
-                await service.CancelarMesa(storage.Consultar());
+                new StorageItemPedido().ExcluirTodos();
 
+                await service.CancelarMesa(storage.Consultar());
                 storage.Excluir();
 
                 return true;
@@ -101,27 +102,20 @@ namespace SmartQueue.Controller
             }
         }
 
-        public async Task<string> ConsultarTempo()
+        public async Task<TimeSpan> ConsultarTempo()
         {
             try
             {
                 Reserva reserva = storage.Consultar();
                 string result = await service.ConsultarTempo(reserva.QuantidadePessoas);
 
-                return result;
-                //result = result.Split(' ')[1];
+                int minutos;
 
-                //TimeSpan tempo = TimeSpan.Parse(result);
-
-                ////se não houver tempo de espera retorna string vazia.
-                //if (tempo.TotalSeconds < 0)
-                //    return string.Empty;
-                //else
-                //{
-                //    return string.Format("Senha para checkin: {0}\r\nTempo estimado para liberação da mesa: {1}:{2}", reserva.SenhaCheckIn,
-                //        tempo.Hours, tempo.Minutes);
-                //}
-
+                if (int.TryParse(result, out minutos))
+                    return new TimeSpan(0, minutos, 0);
+                else
+                    throw new ApplicationException("Erro ao consultar o tempo de espera, tente novamente mais tarde.");
+                
             }
             catch (Exception ex )
             {

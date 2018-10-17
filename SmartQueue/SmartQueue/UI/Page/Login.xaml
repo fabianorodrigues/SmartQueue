@@ -23,7 +23,7 @@
                         <Image Source="icone_email.png" VerticalOptions="Center"/>
                         <controls:CustomEntry x:Name="txtEmail" 
                                       Placeholder="E-mail" PlaceholderColor="#BFBFBF"
-                                      TextColor ="#F2F2F2" Text="fabiano.1972@hotmail.com"
+                                      TextColor ="#F2F2F2" Text=""
                                       WidthRequest="250"/>
                     </StackLayout>
 
@@ -31,7 +31,7 @@
                         <Image Source="icone_senha.png" VerticalOptions="Center"/>
                         <controls:CustomEntry x:Name="txtSenha" 
                                       Placeholder="Senha" PlaceholderColor="#BFBFBF"
-                                      IsPassword="True" TextColor ="#F2F2F2" Text="123456"
+                                      IsPassword="True" TextColor ="#F2F2F2" Text=""
                                       WidthRequest="250"/>
                     </StackLayout>
                 </StackLayout>
