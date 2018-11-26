@@ -1,10 +1,5 @@
 ﻿using SmartQueue.Controller;
-using SmartQueue.UI.Master;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,11 +7,11 @@ using Xamarin.Forms.Xaml;
 namespace SmartQueue.UI.Page
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SolicitarMesa : ContentPage
+    public partial class SolicitarReserva : ContentPage
     {
         private ReservaController controller;
 
-        public SolicitarMesa()
+        public SolicitarReserva()
         {
             InitializeComponent();
             controller = new ReservaController();
@@ -29,10 +24,13 @@ namespace SmartQueue.UI.Page
             try
             {
                 if (int.Parse(lblQtdAssentos.Text) == 0)
+                {
                     await DisplayAlert("Atenção", "Informe a quantidade de assentos", "Ok");
-
-                else if(await controller.SolicitarMesa(int.Parse(lblQtdAssentos.Text)))
-                        await Navigation.PushAsync(new MenuReserva());
+                }
+                else if (await controller.SolicitarMesa(int.Parse(lblQtdAssentos.Text)))
+                {
+                    await Navigation.PushAsync(new MenuReserva());
+                }
             }
             catch (Exception ex)
             {

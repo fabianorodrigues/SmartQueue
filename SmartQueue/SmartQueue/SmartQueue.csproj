@@ -59,8 +59,8 @@
     <EmbeddedResource Update="UI\Page\SobreProduto.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="UI\Page\SolicitarMesa.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <EmbeddedResource Update="UI\Page\SolicitarReserva.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\PopUp\PopUpAlterarSenha.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

@@ -27,7 +27,7 @@ namespace SmartQueue.UI.Master
 
             listaMenu = new List<MasterPageItem>();
 
-            listaMenu.Add(new MasterPageItem() { Titulo = "Solicitar Mesa", Icone = "icone_mesa.png", TargetType = typeof(SolicitarMesa) });
+            listaMenu.Add(new MasterPageItem() { Titulo = "Solicitar Mesa", Icone = "icone_mesa.png", TargetType = typeof(SolicitarReserva) });
             listaMenu.Add(new MasterPageItem() { Titulo = "Meu Histórico", Icone = "icone_historico.png", TargetType = typeof(HistoricoReserva) });
             listaMenu.Add(new MasterPageItem() { Titulo = "Cardápio", Icone = "icone_cardapio.png", TargetType = typeof(Cardapio) });
             listaMenu.Add(new MasterPageItem() { Titulo = "Ranking", Icone = "icone_ranking.png", TargetType = typeof(Ranking) });
@@ -39,7 +39,7 @@ namespace SmartQueue.UI.Master
             listViewMenu.ItemsSource = listaMenu;
 
             //IsGestureEnabled = false;
-            Detail = new NavigationPage(new SolicitarMesa());
+            Detail = new NavigationPage(new SolicitarReserva());
             VerificaReservaEmAndamento();
         }
 
@@ -71,7 +71,7 @@ namespace SmartQueue.UI.Master
             var item = (MasterPageItem)e.SelectedItem;
             Type page = item.TargetType;
 
-            if (page == typeof(SolicitarMesa)) return;
+            if (page == typeof(SolicitarReserva)) return;
 
 
             if (page == typeof(PopUpSobre) || page == typeof(PopUpAlterarSenha))

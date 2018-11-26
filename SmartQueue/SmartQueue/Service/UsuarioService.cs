@@ -32,7 +32,7 @@ namespace SmartQueue.Service
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<Usuario>(response.Content.ReadAsStringAsync().Result);
                 else
-                    throw new ApplicationException(response.Content.ReadAsStringAsync().Result);
+                    throw new ApplicationException(JsonConvert.DeserializeObject<string>(response.Content.ReadAsStringAsync().Result));
 
             }
             catch (Exception ex)
@@ -52,7 +52,7 @@ namespace SmartQueue.Service
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<Usuario>(response.Content.ReadAsStringAsync().Result);
                 else
-                    throw new ApplicationException(response.Content.ReadAsStringAsync().Result);
+                    throw new ApplicationException(JsonConvert.DeserializeObject<string>(response.Content.ReadAsStringAsync().Result));
             }
             catch (Exception ex)
             {
@@ -75,7 +75,7 @@ namespace SmartQueue.Service
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<Usuario>(response.Content.ReadAsStringAsync().Result);
                 else
-                    throw new ApplicationException(response.Content.ReadAsStringAsync().Result);
+                    throw new ApplicationException(JsonConvert.DeserializeObject<string>(response.Content.ReadAsStringAsync().Result));
             }
             catch (Exception ex)
             {
@@ -92,7 +92,7 @@ namespace SmartQueue.Service
                 if (response.IsSuccessStatusCode)
                     return true;
                 else
-                    throw new ApplicationException(response.Content.ReadAsStringAsync().Result);
+                    throw new ApplicationException(JsonConvert.DeserializeObject<string>(response.Content.ReadAsStringAsync().Result));
             }
             catch (Exception ex)
             {
@@ -110,7 +110,7 @@ namespace SmartQueue.Service
                 if (response.IsSuccessStatusCode)
                     return true;
                 else
-                    throw new ApplicationException(response.Content.ReadAsStringAsync().Result);
+                    throw new ApplicationException(JsonConvert.DeserializeObject<string>(response.Content.ReadAsStringAsync().Result));
             }
             catch (Exception ex)
             {
@@ -130,7 +130,7 @@ namespace SmartQueue.Service
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<Usuario>(response.Content.ReadAsStringAsync().Result);
                 else
-                    throw new ApplicationException(response.Content.ReadAsStringAsync().Result);
+                    throw new ApplicationException(JsonConvert.DeserializeObject<string>(response.Content.ReadAsStringAsync().Result));
             }
             catch (Exception ex)
             {
