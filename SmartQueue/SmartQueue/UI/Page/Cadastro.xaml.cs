@@ -105,8 +105,12 @@ namespace SmartQueue.UI.Page
 
         private async void Cadastrar_Clicked(object sender, EventArgs e)
         {
+            ((Button)sender).IsEnabled = false;
+
             if (await Validacao())
                 Cadastrar();
+
+            ((Button)sender).IsEnabled = true;
         }
 
         private void txt_Focused(object sender, FocusEventArgs e)

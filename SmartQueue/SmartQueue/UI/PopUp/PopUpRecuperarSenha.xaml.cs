@@ -39,7 +39,9 @@ namespace SmartQueue.UI.PopUp
 
         private void Recuperar_Clicked(object sender, System.EventArgs e)
         {
+            ((Button)sender).IsEnabled = false;
             Recuperar();
+            ((Button)sender).IsEnabled = true;
         }
 
         private void txt_Focused(object sender, Xamarin.Forms.FocusEventArgs e)
@@ -55,7 +57,9 @@ namespace SmartQueue.UI.PopUp
 
         private async void Cancelar_Clicked(object sender, EventArgs e)
         {
+            ((Button)sender).IsEnabled = false;
             await PopupNavigation.Instance.PopAsync(true);
+            ((Button)sender).IsEnabled = true;
         }
     }
 }

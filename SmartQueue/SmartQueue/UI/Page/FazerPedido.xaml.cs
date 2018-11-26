@@ -150,7 +150,9 @@ namespace SmartQueue.UI.Page
 
         private void ButtonRegistrarPedidos_Clicked(object sender, EventArgs e)
         {
+            ((Button)sender).IsEnabled = false;
             RegistrarPedidos();
+            ((Button)sender).IsEnabled = true;
         }
     }
 }

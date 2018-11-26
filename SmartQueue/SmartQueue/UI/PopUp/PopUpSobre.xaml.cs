@@ -1,6 +1,7 @@
 ﻿using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace SmartQueue.UI.PopUp
@@ -15,7 +16,9 @@ namespace SmartQueue.UI.PopUp
 
         private async void Voltar_Clicked(object sender, EventArgs e)
         {
+            ((Button)sender).IsEnabled = false;
             await PopupNavigation.Instance.PopAsync(true);
+            ((Button)sender).IsEnabled = true;
         }
     }
 }

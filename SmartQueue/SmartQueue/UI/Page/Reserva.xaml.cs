@@ -213,7 +213,9 @@ namespace SmartQueue.UI.Page
 
         private void CancelarReserva_Clicked(object sender, EventArgs e)
         {
+            ((Button)sender).IsEnabled = false;
             CancelarReserva();
+            ((Button)sender).IsEnabled = true;
         }
 
         private void txt_Focused(object sender, FocusEventArgs e)
@@ -241,7 +243,9 @@ namespace SmartQueue.UI.Page
 
         private void ButtonAtivarReserva_Clicked(object sender, EventArgs e)
         {
+            ((Button)sender).IsEnabled = false;
             AtivarReserva();
+            ((Button)sender).IsEnabled = true;
         }
     }
 }

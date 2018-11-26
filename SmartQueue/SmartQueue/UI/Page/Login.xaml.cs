@@ -30,16 +30,11 @@ namespace SmartQueue.UI.Page
 
         private async Task<bool> Validacao()
         {
-            if (!Aplicacao.EmailValido(txtEmail.Text))
+            if (!Aplicacao.EmailValido(txtEmail.Text) || string.IsNullOrEmpty(txtSenha.Text) || txtSenha.Text.Length < 6)
             {
-                await DisplayAlert("E-mail inválido", "Digite um e-mail válido.", "Ok");
+                await DisplayAlert("Atenção", "Email e/ou senha estão incorretos.", "Ok");
                 return false;
-            }
-            else if (string.IsNullOrEmpty(txtSenha.Text) || txtSenha.Text.Length < 6)
-            {
-                await DisplayAlert("Senha inválida", "A senha deve ter ao menos 6 dígitos.", "Ok");
-                return false;
-            }             
+            }       
             else
                 return true;
         }
