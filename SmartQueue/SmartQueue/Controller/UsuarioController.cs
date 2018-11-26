@@ -59,10 +59,11 @@ namespace SmartQueue.Controller
             return true;
         }
 
-        public async Task<bool> AlterarSenha(string novaSenha)
+        public async Task<bool> AlterarSenha(string senhaAtualDigitada, string novaSenha)
         {
             Usuario usuario = storage.Consultar();
             string senhaAnterior = usuario.Senha;
+            usuario.Senha = senhaAtualDigitada;
 
             usuario = await service.AlterarSenha(usuario, novaSenha);
 

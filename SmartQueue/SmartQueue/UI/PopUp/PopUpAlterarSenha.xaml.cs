@@ -21,6 +21,13 @@ namespace SmartQueue.UI.PopUp
 
         public async Task<bool> Validacao()
         {
+            if(string.IsNullOrEmpty(txtSenhaAtual.Text) || string.IsNullOrEmpty(txtNovaSenha.Text) 
+                || string.IsNullOrEmpty(txtConfirmarSenha.Text))
+            {
+                await DisplayAlert("Atenção", "Digite os campos corretamente.", "Ok");
+                return false;
+            }
+
             if (txtSenhaAtual.Text.Length < 6)
             {
                 await DisplayAlert("Senha atual inválida", "A senha digitada não corresponde a senha cadastrada.", "Ok");
@@ -49,7 +56,7 @@ namespace SmartQueue.UI.PopUp
         {
             try
             {
-                if (await controller.AlterarSenha(txtNovaSenha.Text))
+                if (await controller.AlterarSenha(txtSenhaAtual.Text, txtNovaSenha.Text))
                 {
                     await DisplayAlert(string.Empty, "Senha alterada com sucesso", "Ok");
                     await Navigation.PopAsync();
