@@ -61,6 +61,7 @@ namespace SmartQueue.Controller
                 foreach (var produto in produtos)
                 {
                     ItemRanking item = new ItemRanking();
+                    item.IdProduto = produto.Id;
                     item.Nome = produto.Nome;
                     item.Valor = produto.Valor;
                     item.Imagem = Aplicacao.ConverteImagem(produto.Imagem);

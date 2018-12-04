@@ -85,13 +85,21 @@ namespace SmartQueue.Controller
             return await service.RecuperarSenhaEmail(email);
         }
 
-        public bool Sair()
+        public async Task<bool> Sair()
         {
             try
-            {
-                new StorageConta().Excluir();
+            {            
+                StorageConta storageConta = new StorageConta();
+                StorageReserva storageReserva = new StorageReserva();
+
+                if (storageConta.Count() > 0)
+                    await new ContaController().FecharConta();
+                else if (storageReserva.Count() > 0)
+                    await new ReservaController().CancelarReserva();
+
                 new StorageItemPedido().ExcluirTodos();
-                new StorageReserva().Excluir();
+                storageReserva.Excluir();
+                storageConta.Excluir();
                 storage.Excluir();
 
                  if (storage.Count() > 0)

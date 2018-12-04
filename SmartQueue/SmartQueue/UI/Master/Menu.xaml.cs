@@ -50,7 +50,7 @@ namespace SmartQueue.UI.Master
                 var sair = await DisplayAlert("Confirmação de Logout", "Tem certeza que deseja sair?", "Sim", "Não");
 
                 if (sair)
-                    if (usuarioController.Sair())
+                    if (await usuarioController.Sair())
                         await Navigation.PopAsync(true);
             }
             catch (Exception ex)

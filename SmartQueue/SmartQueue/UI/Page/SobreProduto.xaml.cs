@@ -1,6 +1,7 @@
 ﻿using SmartQueue.Controller;
 using SmartQueue.Model;
 using SmartQueue.Utils;
+using System;
 using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -22,13 +23,21 @@ namespace SmartQueue.UI.Page
 
         private async void CarregaInformacoes(int idProduto)
         {
-            Produto produto = await controller.ConsultarProduto(idProduto);
+            try
+            {
+                Produto produto = await controller.ConsultarProduto(idProduto);
 
-            imagem.Source = Aplicacao.ConverteImagem(produto.Imagem);
+                imagem.Source = Aplicacao.ConverteImagem(produto.Imagem);
 
-            lblDescricaoProduto.Text = produto.Descricao;
-            lblValorProduto.Text = string.Format("R${0}", produto.Valor);
-            lblNomeProduto.Text = produto.Nome;
+                lblDescricaoProduto.Text = produto.Descricao;
+                lblValorProduto.Text = string.Format("R${0}", produto.Valor);
+                lblNomeProduto.Text = produto.Nome;
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "Ok");
+            }
+            
         }
 
         

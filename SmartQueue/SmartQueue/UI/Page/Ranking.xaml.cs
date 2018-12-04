@@ -35,15 +35,7 @@ namespace SmartQueue.UI.Page
 
         private async void listaRanking_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            try
-            {
-                await Navigation.PushAsync(new SobreProduto((e.Item as ItemRanking).IdProduto));
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Erro", ex.Message, "Ok");
-            }
-            
+            await Navigation.PushAsync(new SobreProduto((e.Item as ItemRanking).IdProduto));            
         }
     }
 }
