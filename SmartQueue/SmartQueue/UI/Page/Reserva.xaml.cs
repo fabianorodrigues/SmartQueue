@@ -38,6 +38,7 @@ namespace SmartQueue.UI.Page
 
                 if (statusReserva == "Em Uso")
                 {
+
                     ComponentesAtivarMesa(true);
                     ComponentesTempo(false);
 

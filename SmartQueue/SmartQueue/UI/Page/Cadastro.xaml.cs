@@ -63,6 +63,11 @@ namespace SmartQueue.UI.Page
                 await DisplayAlert("Atenção", "A senha confirmada não é igual a senha requerida.", "Ok");
                 return false;
             }
+            else if ((DateTime.Now.Year - dtNascimento.Date.Year) < 14)
+            {
+                await DisplayAlert("Atenção", "É necessário ter a idade maior que 13 anos.", "Ok");
+                return false;
+            }
             else
                 return true;
         }
