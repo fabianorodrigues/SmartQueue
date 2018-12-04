@@ -79,12 +79,14 @@ namespace SmartQueue.UI.Page
                     {
                         new ReservaController().RegistrarPedidos(dicItensPedidos);
                         var menuReserva = this.Parent as TabbedPage;
-                        menuReserva.CurrentPage = menuReserva.Children[0];
+                        if(menuReserva.Children.Count > 0)
+                            menuReserva.CurrentPage = menuReserva.Children[0];
                     }
                     else if(await new ContaController().RealizarPedido(dicItensPedidos))
                     {
                         var menuReserva = this.Parent as TabbedPage;
-                        menuReserva.CurrentPage = menuReserva.Children[1];
+                        if (menuReserva.Children.Count > 1)
+                            menuReserva.CurrentPage = menuReserva.Children[1];
                     }
 
                     dicItensPedidos = new Dictionary<int, int>();

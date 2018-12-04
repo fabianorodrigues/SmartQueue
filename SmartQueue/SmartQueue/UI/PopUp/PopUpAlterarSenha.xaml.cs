@@ -72,8 +72,12 @@ namespace SmartQueue.UI.PopUp
 
         private async void Salvar_Clicked(object sender, EventArgs e)
         {
+            ((Button)sender).IsEnabled = false;
+
             if (await Validacao())
                 Salvar();
+
+            ((Button)sender).IsEnabled = true;
         }
 
         private void txt_Focused(object sender, FocusEventArgs e)

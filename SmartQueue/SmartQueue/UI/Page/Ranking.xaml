@@ -14,7 +14,7 @@
             <ListView x:Name="listaRanking" ItemTapped="listaRanking_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ImageCell ImageSource="logo.png" 
+                        <ImageCell ImageSource="{Binding Imagem}" 
                                    Text="{Binding Nome}" 
                                    Detail="{Binding Valor,  StringFormat=' {0:c}'}"/>
                     </DataTemplate>

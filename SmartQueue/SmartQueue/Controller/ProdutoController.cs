@@ -3,6 +3,8 @@ using SmartQueue.Model;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using SmartQueue.Utils;
 
 namespace SmartQueue.Controller
 {
@@ -46,9 +48,33 @@ namespace SmartQueue.Controller
             return await service.ListarProdutos();
         }
 
-        public async Task<List<Produto>> Ranking()
+        public async Task<List<ItemRanking>> Ranking()
         {
-            return await service.Ranking();
+            List<Produto> produtos;
+            List<ItemRanking> ranking;
+
+            try
+            {
+                ranking = new List<ItemRanking>();
+                produtos = await service.Ranking();
+
+                foreach (var produto in produtos)
+                {
+                    ItemRanking item = new ItemRanking();
+                    item.Nome = produto.Nome;
+                    item.Valor = produto.Valor;
+                    item.Imagem = Aplicacao.ConverteImagem(produto.Imagem);
+
+                    ranking.Add(item);
+                }
+
+                return ranking;
+            }
+            catch (Exception ex)
+            {
+                new ApplicationException(string.Format("Erro ao montar o Raking.\n{0}", ex.Message));
+                return new List<ItemRanking>();
+            }
         }
 
         public async Task<List<Categoria>> ListarCategorias()

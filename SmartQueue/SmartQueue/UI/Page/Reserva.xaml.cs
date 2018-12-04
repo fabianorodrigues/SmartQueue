@@ -74,8 +74,11 @@ namespace SmartQueue.UI.Page
                     ComponentesTempo(false);
 
                     var menuReserva = this.Parent as TabbedPage;
-                    menuReserva.CurrentPage = menuReserva.Children[2];
-                    menuReserva.Children.RemoveAt(0);
+                    if (menuReserva.Children.Count > 2)
+                    {
+                        menuReserva.CurrentPage = menuReserva.Children[2];
+                        menuReserva.Children.RemoveAt(0);
+                    }
                 }
                 else
                 {
@@ -83,10 +86,6 @@ namespace SmartQueue.UI.Page
                     horas = tempo.Hours;
                     minutos = tempo.Minutes;
                     segundos = tempo.Seconds;
-
-                    //horas = 0;
-                    //minutos = 0;
-                    //segundos = 10;
 
                     LiberarMesa();
                 }
@@ -147,7 +146,7 @@ namespace SmartQueue.UI.Page
 
                 if (sair)
                 {
-                    if(await controller.CancelarMesa())
+                    if(await controller.CancelarReserva())
                     {
                         reservaCancelada = true;
                         await Navigation.PopAsync(true);
@@ -186,8 +185,12 @@ namespace SmartQueue.UI.Page
                 if (await controller.AtivarReserva(int.Parse(txtNmrMesa.Text), txtSenhaMesa.Text))
                 {
                     var menuReserva = this.Parent as TabbedPage;
-                    menuReserva.CurrentPage = menuReserva.Children[2];
-                    menuReserva.Children.RemoveAt(0);
+                    if (menuReserva.Children.Count > 2)
+                    {
+                        menuReserva.CurrentPage = menuReserva.Children[2];
+                        menuReserva.Children.RemoveAt(0);
+                    }
+                    
                 }            
             }
             catch (Exception ex)

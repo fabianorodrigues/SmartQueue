@@ -18,12 +18,6 @@ namespace SmartQueue.UI.Page
             ConsultarRanking();
         }
 
-        //protected async override void OnAppearing()
-        //{
-        //    base.OnAppearing();
-        //    ConsultarRanking();
-        //}
-
         public async void ConsultarRanking()
         {
             try
@@ -41,7 +35,15 @@ namespace SmartQueue.UI.Page
 
         private async void listaRanking_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            await Navigation.PushAsync(new SobreProduto((e.Item as Produto).Id));
+            try
+            {
+                await Navigation.PushAsync(new SobreProduto((e.Item as ItemRanking).IdProduto));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "Ok");
+            }
+            
         }
     }
 }

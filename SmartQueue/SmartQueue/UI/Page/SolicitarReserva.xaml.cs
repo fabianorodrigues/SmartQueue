@@ -27,7 +27,7 @@ namespace SmartQueue.UI.Page
                 {
                     await DisplayAlert("Atenção", "Informe a quantidade de assentos", "Ok");
                 }
-                else if (await controller.SolicitarMesa(int.Parse(lblQtdAssentos.Text)))
+                else if (await controller.SolicitarReserva(int.Parse(lblQtdAssentos.Text)))
                 {
                     await Navigation.PushAsync(new MenuReserva());
                 }

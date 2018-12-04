@@ -23,7 +23,7 @@ namespace SmartQueue.Controller
             return await service.ConsultarHistorico(new StorageUsuario().Consultar().Id);
         }
 
-        public async Task<bool> SolicitarMesa(int qtdAssentos)
+        public async Task<bool> SolicitarReserva(int qtdAssentos)
         {
             Reserva reserva = new Reserva();
 
@@ -35,7 +35,7 @@ namespace SmartQueue.Controller
                 reserva.UsuarioId = new StorageUsuario().Consultar().Id;
                 reserva.QuantidadePessoas = qtdAssentos;
 
-                reserva = await service.SolicitarMesa(reserva);
+                reserva = await service.SolicitarReserva(reserva);
 
                 storage.Incluir(reserva);
 
@@ -54,16 +54,16 @@ namespace SmartQueue.Controller
             }        
         }
 
-        public async Task<bool> CancelarMesa()
+        public async Task<bool> CancelarReserva()
         {
             try
             {
                 if (storage.Count() <= 0)
-                    return true;
+                    return false;
 
                 new StorageItemPedido().ExcluirTodos();
 
-                await service.CancelarMesa(storage.Consultar());
+                await service.CancelarReserva(storage.Consultar());
                 storage.Excluir();
 
                 return true;
@@ -107,7 +107,7 @@ namespace SmartQueue.Controller
             try
             {
                 Reserva reserva = storage.Consultar();
-                string result = await service.ConsultarTempo(reserva.QuantidadePessoas);
+                string result = await service.ConsultarTempo(reserva.Id);
 
                 int minutos;
 

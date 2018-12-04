@@ -22,8 +22,8 @@ namespace SmartQueue.Model
         [JsonProperty("quantidadePessoas")]
         public int QuantidadePessoas { get; set; }
 
-        [JsonProperty("tempoDeEspera")]
-        public TimeSpan TempoDeEspera { get; set; }
+        [JsonProperty("minutosDeEspera")]
+        public int MinutosDeEspera { get; set; }
 
         [JsonProperty("status")]
         public string Status { get; set; }

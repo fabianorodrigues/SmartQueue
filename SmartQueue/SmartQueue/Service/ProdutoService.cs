@@ -21,7 +21,7 @@ namespace SmartQueue.Service
         {
             try
             {
-                var response = await client.GetAsync(Aplicacao.Url("produtos", "BuscarPorId", id.ToString()));
+                var response = await client.GetAsync(Aplicacao.Url("produtos", "ConsultarProduto", id.ToString()));
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<Produto>(response.Content.ReadAsStringAsync().Result);
                 else

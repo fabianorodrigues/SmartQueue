@@ -35,13 +35,13 @@ namespace SmartQueue.Service
             
         }
 
-        public async Task<Reserva> SolicitarMesa(Reserva reserva)
+        public async Task<Reserva> SolicitarReserva(Reserva reserva)
         {
             try
             {
                 var json = JsonConvert.SerializeObject(reserva);
 
-                var response = await client.PostAsync(Aplicacao.Url("reservas", "SolicitarMesa"), Aplicacao.Content(json));
+                var response = await client.PostAsync(Aplicacao.Url("reservas", "SolicitarReserva"), Aplicacao.Content(json));
 
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<Reserva>(response.Content.ReadAsStringAsync().Result);
@@ -76,11 +76,11 @@ namespace SmartQueue.Service
 
         }
 
-        public async Task<string> ConsultarTempo(int quantidadePessoas)
+        public async Task<string> ConsultarTempo(int idReserva)
         {
             try
             {
-                var response = await client.GetAsync("http://sqpythonia.azurewebsites.net/run");
+                var response = await client.GetAsync(Aplicacao.Url("reservas", "ConsultarTempo", idReserva.ToString()));
 
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<string>(response.Content.ReadAsStringAsync().Result);
@@ -94,13 +94,13 @@ namespace SmartQueue.Service
 
         }
 
-        public async Task<string> CancelarMesa(Reserva reserva)
+        public async Task<string> CancelarReserva(Reserva reserva)
         {
             try
             {
                 var json = JsonConvert.SerializeObject(reserva);
 
-                var response = await client.PostAsync(Aplicacao.Url("reservas", "CancelarMesa"), Aplicacao.Content(json));
+                var response = await client.PostAsync(Aplicacao.Url("reservas", "CancelarReserva"), Aplicacao.Content(json));
 
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<string>(response.Content.ReadAsStringAsync().Result);
