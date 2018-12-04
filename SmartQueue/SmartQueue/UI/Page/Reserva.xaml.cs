@@ -17,9 +17,7 @@ namespace SmartQueue.UI.Page
 	public partial class Reserva : ContentPage
 	{
         private ReservaController controller;
-        private int segundos;
-        private int minutos;
-        private int horas;
+        TimeSpan tempoDeFila;
         private bool reservaCancelada;
         private Dictionary<string, int> dicListaItensPendentes;
 
@@ -28,8 +26,40 @@ namespace SmartQueue.UI.Page
 			InitializeComponent();
             controller = new ReservaController();
 
-            ConsultarTempo();             
+            IniciarReserva();          
 
+        }
+
+        public async void IniciarReserva()
+        {
+            try
+            {
+                string statusReserva = new StorageReserva().Consultar().Status;
+
+                if (statusReserva == "Em Uso")
+                {
+                    ComponentesAtivarMesa(true);
+                    ComponentesTempo(false);
+
+                    var menuReserva = this.Parent as TabbedPage;
+                    if (menuReserva.Children.Count > 2)
+                    {
+                        menuReserva.CurrentPage = menuReserva.Children[2];
+                        menuReserva.Children.RemoveAt(0);
+                    }
+                }
+                else
+                {
+                    ConsultarTempo();
+                    LiberarMesa();
+                }
+                    
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "Ok");
+                await Navigation.PopAsync();
+            }
         }
 
         private async void CarregaDados()
@@ -56,7 +86,6 @@ namespace SmartQueue.UI.Page
                 }
                 else
                     layoutPedidosPendentes.IsVisible = false;
-
                 
             }
             
@@ -64,32 +93,15 @@ namespace SmartQueue.UI.Page
 
         public async void ConsultarTempo()
         {
+         
             try
             {
-                string statusReserva = new StorageReserva().Consultar().Status;
+                TimeSpan tempoAPI = await controller.ConsultarTempo();
 
-                if (statusReserva == "Em Uso")
-                {
-                    ComponentesAtivarMesa(true);
-                    ComponentesTempo(false);
-
-                    var menuReserva = this.Parent as TabbedPage;
-                    if (menuReserva.Children.Count > 2)
-                    {
-                        menuReserva.CurrentPage = menuReserva.Children[2];
-                        menuReserva.Children.RemoveAt(0);
-                    }
-                }
-                else
-                {
-                    TimeSpan tempo = await controller.ConsultarTempo();
-                    horas = tempo.Hours;
-                    minutos = tempo.Minutes;
-                    segundos = tempo.Seconds;
-
-                    LiberarMesa();
-                }
-                
+                if (tempoDeFila == null)
+                    tempoDeFila = tempoAPI;
+                else if (tempoDeFila.TotalMinutes > tempoAPI.TotalMinutes)
+                    tempoDeFila = tempoAPI;
             }
             catch (Exception ex)
             {
@@ -103,6 +115,8 @@ namespace SmartQueue.UI.Page
         {  
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
+                int segundos = tempoDeFila.Seconds, minutos = tempoDeFila.Minutes, horas = tempoDeFila.Hours;
+
                 if (reservaCancelada)
                     return false;
                 else if (segundos == 0)
@@ -126,6 +140,7 @@ namespace SmartQueue.UI.Page
                     {
                         minutos -= 1;
                         segundos = 60;
+                        ConsultarTempo();
                     }
 
                 }
@@ -133,6 +148,12 @@ namespace SmartQueue.UI.Page
                     segundos -= 1;
 
                 lblTempoLiberarMesa.Text = string.Format("{2}:{1}:{0}", segundos.ToString("00"), minutos.ToString("00"), horas.ToString("00"));
+
+                //Esse bloco é executado porque de 1 em 1 minuto, o tempo é consultado na API e pode mudar para menos do que atualmente.
+                TimeSpan tempo = new TimeSpan(horas, minutos, segundos);
+                if (tempoDeFila.TotalMinutes > tempo.TotalMinutes)
+                    tempoDeFila = tempo;
+
                 return true;
             });
             
