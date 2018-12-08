@@ -2,23 +2,23 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SmartQueue.App">
-    <Application.Resources>
-        <ResourceDictionary>
+	<Application.Resources>
+		<ResourceDictionary>
 
-            <Style TargetType="Button">
-                <Setter Property="TextColor" Value="#F2F2F2" />
-                <Setter Property="BorderWidth" Value="1"/>
-                <Setter Property="BorderRadius" Value="30"/>
-                <Setter Property="BorderColor" Value="#C0120A"/>
-                <Setter Property="BackgroundColor" Value="#C0120A" />
-            </Style>
+			<Style TargetType="Button" BaseResourceKey="ButtonStyle">
+				<Setter Property="TextColor" Value="#F2F2F2" />
+				<Setter Property="BorderWidth" Value="1"/>
+				<Setter Property="BorderRadius" Value="30"/>
+				<Setter Property="BorderColor" Value="#C0120A"/>
+				<Setter Property="BackgroundColor" Value="#C0120A" />
+			</Style>
 
-            <Style TargetType="Label">
-                <Setter Property="TextColor" Value="#C0120A"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
-            </Style>
+			<Style TargetType="Label">
+				<Setter Property="TextColor" Value="#C0120A"/>
+				<Setter Property="FontAttributes" Value="Bold"/>
+			</Style>
 
-            <!--<Style TargetType="NavigationPage">
+			<!--<Style TargetType="NavigationPage">
                 <Setter Property="BackgroundColor" Value="#AA0E09" />
             </Style>
             
@@ -36,6 +36,6 @@
                 <Setter Property="BackgroundColor" Value="#C0120A" />
             </Style>-->
 
-        </ResourceDictionary>
-    </Application.Resources>
+		</ResourceDictionary>
+	</Application.Resources>
 </Application>

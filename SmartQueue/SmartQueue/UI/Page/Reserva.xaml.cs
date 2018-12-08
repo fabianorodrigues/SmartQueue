@@ -1,5 +1,4 @@
-﻿using Plugin.LocalNotifications;
-using SmartQueue.Controller;
+﻿using SmartQueue.Controller;
 using SmartQueue.DAL;
 using SmartQueue.Model;
 using SmartQueue.Utils;
@@ -12,21 +11,21 @@ using Xamarin.Forms.Xaml;
 
 namespace SmartQueue.UI.Page
 {
-    
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class Reserva : ContentPage
-	{
+
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class Reserva : ContentPage
+    {
         private ReservaController controller;
         TimeSpan tempoDeFila;
         private bool reservaCancelada;
         private Dictionary<string, int> dicListaItensPendentes;
 
-        public Reserva ()
-		{
-			InitializeComponent();
+        public Reserva()
+        {
+            InitializeComponent();
             controller = new ReservaController();
 
-            IniciarReserva();          
+            IniciarReserva();
 
         }
 
@@ -42,7 +41,7 @@ namespace SmartQueue.UI.Page
                     ComponentesAtivarMesa(true);
                     ComponentesTempo(false);
 
-                    var menuReserva = this.Parent as TabbedPage;
+                    TabbedPage menuReserva = this.Parent as TabbedPage;
                     if (menuReserva.Children.Count > 2)
                     {
                         menuReserva.CurrentPage = menuReserva.Children[2];
@@ -51,10 +50,10 @@ namespace SmartQueue.UI.Page
                 }
                 else
                 {
-                    ConsultarTempo();
+                    ConsultarTempo(true);
                     LiberarMesa();
                 }
-                    
+
             }
             catch (Exception ex)
             {
@@ -65,7 +64,7 @@ namespace SmartQueue.UI.Page
 
         private async void CarregaDados()
         {
-            if(lvPedidosPendentes.ItemsSource == null)
+            if (lvPedidosPendentes.ItemsSource == null)
             {
                 List<ItemPedido> itens = controller.ItensPedidosPendentes();
 
@@ -75,9 +74,9 @@ namespace SmartQueue.UI.Page
 
                     dicListaItensPendentes = new Dictionary<string, int>();
 
-                    foreach (var item in itens)
+                    foreach (ItemPedido item in itens)
                     {
-                        var produto = produtos.First(x => x.Id == item.ProdutoId);
+                        Produto produto = produtos.First(x => x.Id == item.ProdutoId);
                         dicListaItensPendentes.Add(produto.Nome, item.Quantidade);
                     }
 
@@ -86,40 +85,45 @@ namespace SmartQueue.UI.Page
                     layoutPedidosPendentes.IsVisible = true;
                 }
                 else
+                {
                     layoutPedidosPendentes.IsVisible = false;
-                
+                }
             }
-            
+
         }
 
-        public async void ConsultarTempo()
+        public async void ConsultarTempo(bool inicio)
         {
-         
             try
             {
                 TimeSpan tempoAPI = await controller.ConsultarTempo();
 
-                if (tempoDeFila == null)
+                if (inicio)
+                {
                     tempoDeFila = tempoAPI;
+                }
                 else if (tempoDeFila.TotalMinutes > tempoAPI.TotalMinutes)
+                {
                     tempoDeFila = tempoAPI;
+                }
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Erro", ex.Message, "Ok");
                 await Navigation.PopAsync();
             }
-            
         }
 
         public void LiberarMesa()
-        {  
+        {
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
                 int segundos = tempoDeFila.Seconds, minutos = tempoDeFila.Minutes, horas = tempoDeFila.Hours;
 
                 if (reservaCancelada)
+                {
                     return false;
+                }
                 else if (segundos == 0)
                 {
                     if (minutos == 0)
@@ -133,60 +137,65 @@ namespace SmartQueue.UI.Page
                         }
                         else
                         {
-                            horas -= 1;
-                            minutos = 60;
+                            horas--;
+                            minutos = 59;
+                            segundos = 59;
                         }
                     }
                     else
                     {
-                        minutos -= 1;
-                        segundos = 60;
-                        ConsultarTempo();
+                        minutos--;
+                        segundos = 59;
+                        ConsultarTempo(false);
                     }
 
                 }
                 else
-                    segundos -= 1;
+                {
+                    segundos--;
+                }
 
                 lblTempoLiberarMesa.Text = string.Format("{2}:{1}:{0}", segundos.ToString("00"), minutos.ToString("00"), horas.ToString("00"));
 
                 //Esse bloco é executado porque de 1 em 1 minuto, o tempo é consultado na API e pode mudar para menos do que atualmente.
                 TimeSpan tempo = new TimeSpan(horas, minutos, segundos);
                 if (tempoDeFila.TotalMinutes > tempo.TotalMinutes)
+                {
                     tempoDeFila = tempo;
+                }
 
                 return true;
             });
-            
+
         }
 
         private async void CancelarReserva()
         {
             try
             {
-                var sair = await DisplayAlert("Cancelar Reserva", "Tem certeza que deseja cancelar a reserva?", "Sim", "Não");
+                bool sair = await DisplayAlert("Cancelar Reserva", "Tem certeza que deseja cancelar a reserva?", "Sim", "Não");
 
                 if (sair)
                 {
-                    if(await controller.CancelarReserva())
+                    if (await controller.CancelarReserva())
                     {
                         reservaCancelada = true;
                         await Navigation.PopAsync(true);
                     }
-                        
+
                 }
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Erro", ex.Message, "OK");
             }
-            
-                
+
+
         }
 
         private async Task<bool> ValidaAtivarReserva()
         {
-            if(string.IsNullOrEmpty(txtNmrMesa.Text) || string.IsNullOrEmpty(txtSenhaMesa.Text))
+            if (string.IsNullOrEmpty(txtNmrMesa.Text) || string.IsNullOrEmpty(txtSenhaMesa.Text))
             {
                 await DisplayAlert("Atenção", "Digite a senha e o número da mesa corretamente.", "OK");
                 return false;
@@ -201,19 +210,19 @@ namespace SmartQueue.UI.Page
         }
 
         private async void AtivarReserva()
-        {         
+        {
             try
             {
                 if (await controller.AtivarReserva(int.Parse(txtNmrMesa.Text), txtSenhaMesa.Text))
                 {
-                    var menuReserva = this.Parent as TabbedPage;
+                    TabbedPage menuReserva = this.Parent as TabbedPage;
                     if (menuReserva.Children.Count > 2)
                     {
                         menuReserva.CurrentPage = menuReserva.Children[2];
                         menuReserva.Children.RemoveAt(0);
                     }
-                    
-                }            
+
+                }
             }
             catch (Exception ex)
             {
@@ -251,7 +260,9 @@ namespace SmartQueue.UI.Page
         private void txt_Unfocused(object sender, FocusEventArgs e)
         {
             if (((Entry)sender).Text == string.Empty || ((Entry)sender).Text == null)
+            {
                 Aplicacao.MostrarLabel(false, (Entry)sender);
+            }
         }
 
         protected override void OnAppearing()

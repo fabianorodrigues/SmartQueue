@@ -1,9 +1,9 @@
-﻿using SmartQueue.Model;
+﻿using SmartQueue.DAL;
+using SmartQueue.Model;
 using SmartQueue.Service;
-using SmartQueue.DAL;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
 
 namespace SmartQueue.Controller
 {
@@ -29,8 +29,10 @@ namespace SmartQueue.Controller
 
             try
             {
-                if(storage.Count() > 0)
+                if (storage.Count() > 0)
+                {
                     storage.Excluir();
+                }
 
                 reserva.UsuarioId = new StorageUsuario().Consultar().Id;
                 reserva.QuantidadePessoas = qtdAssentos;
@@ -40,7 +42,9 @@ namespace SmartQueue.Controller
                 storage.Incluir(reserva);
 
                 if (storage.Count() <= 0)
+                {
                     new ApplicationException("Erro desconhecido, tente novamente.");
+                }
 
                 return true;
             }
@@ -51,7 +55,7 @@ namespace SmartQueue.Controller
             finally
             {
                 GC.Collect();
-            }        
+            }
         }
 
         public async Task<bool> CancelarReserva()
@@ -59,7 +63,9 @@ namespace SmartQueue.Controller
             try
             {
                 if (storage.Count() <= 0)
+                {
                     return false;
+                }
 
                 new StorageItemPedido().ExcluirTodos();
 
@@ -67,7 +73,7 @@ namespace SmartQueue.Controller
                 storage.Excluir();
 
                 return true;
-                
+
             }
             catch (Exception ex)
             {
@@ -75,7 +81,7 @@ namespace SmartQueue.Controller
             }
         }
 
-        public async Task<bool> AtivarReserva(int nmrMesa , string senhaDaMesa)
+        public async Task<bool> AtivarReserva(int nmrMesa, string senhaDaMesa)
         {
             try
             {
@@ -87,7 +93,9 @@ namespace SmartQueue.Controller
                 StorageConta storageConta = new StorageConta();
 
                 if (storageConta.Count() > 0)
+                {
                     storageConta.Excluir();
+                }
 
                 storageConta.Incluir(conta);
 
@@ -109,19 +117,21 @@ namespace SmartQueue.Controller
                 Reserva reserva = storage.Consultar();
                 string result = await service.ConsultarTempo(reserva.Id);
 
-                int minutos;
 
-                if (int.TryParse(result, out minutos))
+                if (int.TryParse(result, out int minutos))
+                {
                     return new TimeSpan(0, minutos, 0);
+                }
                 else
+                {
                     throw new ApplicationException("Erro ao consultar o tempo de espera, tente novamente mais tarde.");
-                
+                }
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
                 throw ex;
             }
-            
+
         }
 
         public void RegistrarPedidos(Dictionary<int, int> dicItensPedidos)
@@ -130,7 +140,7 @@ namespace SmartQueue.Controller
 
             try
             {
-                foreach (var item in dicItensPedidos)
+                foreach (KeyValuePair<int, int> item in dicItensPedidos)
                 {
                     storageItem.Incluir(new ItemPedido()
                     {

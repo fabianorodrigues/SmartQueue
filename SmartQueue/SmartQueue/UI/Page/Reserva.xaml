@@ -17,6 +17,7 @@
                        Focused="txt_Focused" 
                        Unfocused="txt_Unfocused"
                        Keyboard="Numeric"
+					   MaxLength="3"
                        IsVisible="False"/>
 
                 <Label x:Name="lblSenhaMesa" Text="Senha da mesa" IsVisible="False" Margin="5,0,0,0"/>
