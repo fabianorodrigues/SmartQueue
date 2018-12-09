@@ -68,7 +68,12 @@ namespace SmartQueue.UI.Page
         private int RetornaNumeroProduto(StackLayout layout)
         {
             Label lblProdutoId = (Label)layout.Children[1];
-            return int.Parse(lblProdutoId.Text);
+
+            int idProduto = 0;
+            if(string.IsNullOrEmpty(lblProdutoId.Text))
+                idProduto = int.Parse(lblProdutoId.Text);
+
+            return idProduto;
         }
 
         private void AjustaLabelQuantidadeZero()

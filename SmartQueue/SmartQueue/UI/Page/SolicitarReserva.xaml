@@ -6,13 +6,6 @@
 	<ContentPage.Content>
 		<StackLayout Margin="0,60,0,0" Padding="10" Spacing="20" VerticalOptions="StartAndExpand" HorizontalOptions="Center">
 
-			<ActivityIndicator
-                x:Name="activityIndicator"
-                IsRunning="False"
-                IsVisible="False"
-                HorizontalOptions="Center" VerticalOptions="Center">
-			</ActivityIndicator>
-
 			<Label Text="Quantidade de Assento(s)" FontSize="Large" HorizontalOptions="Center"/>
 
 			<Label x:Name="lblQtdAssentos"
@@ -29,6 +22,13 @@
 			<Button x:Name="btnSolicitar" Text="Solicitar"
                     Clicked="Button_Clicked"/>
 
-		</StackLayout>
+            <ActivityIndicator
+                x:Name="activityIndicator"
+                IsRunning="False"
+                IsVisible="False"
+                HorizontalOptions="Center" VerticalOptions="Center">
+            </ActivityIndicator>
+
+        </StackLayout>
 	</ContentPage.Content>
 </ContentPage>
