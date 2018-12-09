@@ -129,17 +129,15 @@ namespace SmartQueue.UI.Page
         }
 
         protected override void OnAppearing()
-        {            
-            base.OnAppearing();
-
+        {
             VerificaContaAberta();
+            base.OnAppearing();
         }
 
         protected override void OnDisappearing()
         {
-            base.OnDisappearing();
-
             threadAtivada = false;
+            base.OnDisappearing();
         }
 
         private void Button_Clicked(object sender, EventArgs e)

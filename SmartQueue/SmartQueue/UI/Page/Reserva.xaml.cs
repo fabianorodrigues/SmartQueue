@@ -267,14 +267,14 @@ namespace SmartQueue.UI.Page
 
         protected override void OnAppearing()
         {
-            base.OnAppearing();
             CarregaDados();
+            base.OnAppearing(); 
         }
 
         protected override void OnDisappearing()
         {
-            base.OnDisappearing();
             lvPedidosPendentes.ItemsSource = null;
+            base.OnDisappearing();      
         }
 
         private void ButtonAtivarReserva_Clicked(object sender, EventArgs e)
