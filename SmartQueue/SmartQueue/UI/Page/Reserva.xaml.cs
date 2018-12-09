@@ -213,16 +213,20 @@ namespace SmartQueue.UI.Page
         {
             try
             {
-                if (await controller.AtivarReserva(int.Parse(txtNmrMesa.Text), txtSenhaMesa.Text))
+                if (await ValidaAtivarReserva())
                 {
-                    TabbedPage menuReserva = this.Parent as TabbedPage;
-                    if (menuReserva.Children.Count > 2)
+                    if (await controller.AtivarReserva(int.Parse(txtNmrMesa.Text), txtSenhaMesa.Text))
                     {
-                        menuReserva.CurrentPage = menuReserva.Children[2];
-                        menuReserva.Children.RemoveAt(0);
-                    }
+                        TabbedPage menuReserva = this.Parent as TabbedPage;
+                        if (menuReserva.Children.Count > 2)
+                        {
+                            menuReserva.CurrentPage = menuReserva.Children[2];
+                            menuReserva.Children.RemoveAt(0);
+                        }
 
+                    }
                 }
+                
             }
             catch (Exception ex)
             {
