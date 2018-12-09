@@ -144,14 +144,14 @@ namespace SmartQueue.UI.Page
 
         protected override void OnAppearing()
         {
-            base.OnAppearing();
             CarregaCardapio();
+            base.OnAppearing();            
         }
 
         protected override void OnDisappearing()
         {
-            base.OnDisappearing();
             lvCardapio.ItemsSource = null;
+            base.OnDisappearing();         
         }
 
         private void ButtonRegistrarPedidos_Clicked(object sender, EventArgs e)

@@ -140,7 +140,8 @@ namespace SmartQueue.Controller
 
             try
             {
-                storageItem.ExcluirTodos();
+                if(storageItem.Count() > 0)
+                    storageItem.ExcluirTodos();
 
                 foreach (KeyValuePair<int, int> item in dicItensPedidos)
                 {
