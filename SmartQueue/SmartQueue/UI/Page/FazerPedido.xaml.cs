@@ -106,6 +106,7 @@ namespace SmartQueue.UI.Page
                         dicItensPedidos = new Dictionary<int, int>();
 
                         await DisplayAlert("Confirmação", "Pedido registrado com sucesso.", "OK");
+                        AjustaLabelQuantidadeZero();
                     }
                     else
                         await DisplayAlert("Atenção", "Não há itens selecionados.", "OK");
@@ -166,8 +167,7 @@ namespace SmartQueue.UI.Page
         }
 
         protected override void OnDisappearing()
-        {
-            AjustaLabelQuantidadeZero();
+        {   
             lvCardapio.ItemsSource = null;
             base.OnDisappearing();         
         }
