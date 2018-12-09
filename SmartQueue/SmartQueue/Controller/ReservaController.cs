@@ -134,12 +134,14 @@ namespace SmartQueue.Controller
 
         }
 
-        public void RegistrarPedidos(Dictionary<int, int> dicItensPedidos)
+        public void RegistrarPedidosNaFila(Dictionary<int, int> dicItensPedidos)
         {
             StorageItemPedido storageItem = new StorageItemPedido();
 
             try
             {
+                storageItem.ExcluirTodos();
+
                 foreach (KeyValuePair<int, int> item in dicItensPedidos)
                 {
                     storageItem.Incluir(new ItemPedido()

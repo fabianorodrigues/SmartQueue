@@ -79,7 +79,7 @@ namespace SmartQueue.UI.Page
                     {
                         if (new StorageReserva().Consultar().Status == "Em Fila")
                         {
-                            new ReservaController().RegistrarPedidos(dicItensPedidos);
+                            new ReservaController().RegistrarPedidosNaFila(dicItensPedidos);
                             var menuReserva = this.Parent as TabbedPage;
                             if (menuReserva.Children.Count > 0)
                                 menuReserva.CurrentPage = menuReserva.Children[0];
