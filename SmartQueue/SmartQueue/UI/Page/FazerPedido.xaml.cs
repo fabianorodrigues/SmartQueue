@@ -5,7 +5,6 @@ using SmartQueue.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,13 +15,16 @@ namespace SmartQueue.UI.Page
 	{
         private ProdutoController controller;
         private Dictionary<int, int> dicItensPedidos;
+        private List<Label> listaLabelQuantidade;
 
         public FazerPedido ()
 		{
 			InitializeComponent ();
 
             controller = new ProdutoController();
-            
+            listaLabelQuantidade = new List<Label>();
+
+
         }
 
         private void IndicadorDeAtividade()
@@ -67,6 +69,16 @@ namespace SmartQueue.UI.Page
         {
             Label lblProdutoId = (Label)layout.Children[1];
             return int.Parse(lblProdutoId.Text);
+        }
+
+        private void AjustaLabelQuantidadeZero()
+        {
+            foreach (var item in listaLabelQuantidade)
+            {
+                item.Text = "0";
+            }
+
+            listaLabelQuantidade.Clear();
         }
 
         private async void RegistrarPedidos()
@@ -126,6 +138,8 @@ namespace SmartQueue.UI.Page
 
                 if (quantidade > 0)
                     dicItensPedidos.Add(produtoId, quantidade);
+                else
+                    listaLabelQuantidade.Remove(lblQuantidade);
             }
         }
 
@@ -140,18 +154,20 @@ namespace SmartQueue.UI.Page
             int produtoId = RetornaNumeroProduto((StackLayout)lblQuantidade.Parent);
             dicItensPedidos.Remove(produtoId);
             dicItensPedidos.Add(produtoId, quantidade);
+
+            if(!listaLabelQuantidade.Contains(lblQuantidade))
+                listaLabelQuantidade.Add(lblQuantidade);
         }
 
         protected override void OnAppearing()
         {
-            lvCardapio.IsVisible = true;
             CarregaCardapio();
             base.OnAppearing();            
         }
 
         protected override void OnDisappearing()
         {
-            lvCardapio.IsVisible = false;
+            AjustaLabelQuantidadeZero();
             lvCardapio.ItemsSource = null;
             base.OnDisappearing();         
         }
