@@ -75,30 +75,34 @@ namespace SmartQueue.UI.Page
             {
                 if(dicItensPedidos != null)
                 {
-                    if(new StorageReserva().Consultar().Status == "Em Fila")
+                    if(dicItensPedidos.Count() > 0)
                     {
-                        new ReservaController().RegistrarPedidos(dicItensPedidos);
-                        var menuReserva = this.Parent as TabbedPage;
-                        if(menuReserva.Children.Count > 0)
-                            menuReserva.CurrentPage = menuReserva.Children[0];
-                    }
-                    else if(await new ContaController().RealizarPedido(dicItensPedidos))
-                    {
-                        var menuReserva = this.Parent as TabbedPage;
-                        if (menuReserva.Children.Count > 1)
-                            menuReserva.CurrentPage = menuReserva.Children[1];
-                    }
+                        if (new StorageReserva().Consultar().Status == "Em Fila")
+                        {
+                            new ReservaController().RegistrarPedidos(dicItensPedidos);
+                            var menuReserva = this.Parent as TabbedPage;
+                            if (menuReserva.Children.Count > 0)
+                                menuReserva.CurrentPage = menuReserva.Children[0];
+                        }
+                        else if (await new ContaController().RealizarPedido(dicItensPedidos))
+                        {
+                            var menuReserva = this.Parent as TabbedPage;
+                            if (menuReserva.Children.Count > 1)
+                                menuReserva.CurrentPage = menuReserva.Children[1];
+                        }
 
-                    dicItensPedidos = new Dictionary<int, int>();
+                        dicItensPedidos = new Dictionary<int, int>();
 
-                    await DisplayAlert("Confirmação", "Pedido registrado com sucesso.", "OK");
-                    
+                        await DisplayAlert("Confirmação", "Pedido registrado com sucesso.", "OK");
+                    }
+                    else
+                        await DisplayAlert("Atenção", "Não há itens selecionados.", "OK");
                 }
                 
             }
             catch (Exception)
             {
-                await DisplayAlert("Erro", "Erro desconhecido, tente novemente.", "Ok");
+                await DisplayAlert("Erro", "Erro desconhecido, tente novamente.", "Ok");
             }
         }
 
