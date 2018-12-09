@@ -144,12 +144,14 @@ namespace SmartQueue.UI.Page
 
         protected override void OnAppearing()
         {
+            lvCardapio.IsVisible = true;
             CarregaCardapio();
             base.OnAppearing();            
         }
 
         protected override void OnDisappearing()
         {
+            lvCardapio.IsVisible = false;
             lvCardapio.ItemsSource = null;
             base.OnDisappearing();         
         }
