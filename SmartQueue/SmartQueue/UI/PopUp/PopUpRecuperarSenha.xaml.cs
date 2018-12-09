@@ -27,7 +27,7 @@ namespace SmartQueue.UI.PopUp
                     await DisplayAlert("E-mail inválido", "Digite um e-mail válido.", "Ok");
                 else if (await controller.RecuperarSenhaEmail(txtEmail.Text))
                 {
-                    await DisplayAlert("Senha Alterada com sucesso.", "Nova senha encaminhada para o e-mail cdastrado.", "Ok");
+                    await DisplayAlert("Senha alterada com sucesso.", "Nova senha encaminhada para o e-mail cadastrado.", "Ok");
                     await Navigation.PopAsync();
                 }
             }
