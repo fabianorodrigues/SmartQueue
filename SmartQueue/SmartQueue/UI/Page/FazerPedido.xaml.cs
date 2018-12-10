@@ -70,7 +70,7 @@ namespace SmartQueue.UI.Page
             Label lblProdutoId = (Label)layout.Children[1];
 
             int idProduto = 0;
-            if(string.IsNullOrEmpty(lblProdutoId.Text))
+            if(!string.IsNullOrEmpty(lblProdutoId.Text))
                 idProduto = int.Parse(lblProdutoId.Text);
 
             return idProduto;
