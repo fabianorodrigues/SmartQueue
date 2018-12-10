@@ -27,7 +27,7 @@ namespace SmartQueue.UI.Master
 
             listaMenu = new List<MasterPageItem>();
 
-            listaMenu.Add(new MasterPageItem() { Titulo = "Solicitar Mesa", Icone = "icone_mesa.png", TargetType = typeof(SolicitarReserva) });
+            listaMenu.Add(new MasterPageItem() { Titulo = "Solicitar Reserva", Icone = "icone_mesa.png", TargetType = typeof(SolicitarReserva) });
             listaMenu.Add(new MasterPageItem() { Titulo = "Meu Histórico", Icone = "icone_historico.png", TargetType = typeof(HistoricoReserva) });
             listaMenu.Add(new MasterPageItem() { Titulo = "Cardápio", Icone = "icone_cardapio.png", TargetType = typeof(Cardapio) });
             listaMenu.Add(new MasterPageItem() { Titulo = "Ranking", Icone = "icone_ranking.png", TargetType = typeof(Ranking) });
