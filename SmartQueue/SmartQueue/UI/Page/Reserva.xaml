@@ -22,7 +22,8 @@
 
                 <Label x:Name="lblSenhaMesa" Text="Senha da mesa" IsVisible="False" Margin="5,0,0,0"/>
                 <Entry Placeholder="Senha da mesa" x:Name="txtSenhaMesa" 
-                       Focused="txt_Focused" 
+                       Focused="txt_Focused"
+                       MaxLength="6"
                        Unfocused="txt_Unfocused"
                        IsVisible="False"/>
 
