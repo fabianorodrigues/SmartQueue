@@ -76,8 +76,9 @@ namespace SmartQueue.UI.Page
 
                     foreach (ItemPedido item in itens)
                     {
-                        Produto produto = produtos.First(x => x.Id == item.ProdutoId);
-                        dicListaItensPendentes.Add(produto.Nome, item.Quantidade);
+                        Produto produto = produtos.FirstOrDefault(x => x.Id == item.ProdutoId);
+                        if(produto != null && !string.IsNullOrEmpty(produto.Nome))
+                            dicListaItensPendentes.Add(produto.Nome, item.Quantidade);
                     }
 
                     lvPedidosPendentes.ItemsSource = dicListaItensPendentes;
