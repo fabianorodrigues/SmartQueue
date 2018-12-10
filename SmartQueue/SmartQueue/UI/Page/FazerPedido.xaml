@@ -38,8 +38,8 @@
                       SeparatorVisibility="Default"
                       SeparatorColor="#B3B3B3"
                       ItemTapped="listaCardapio_ItemTapped"
-                      HasUnevenRows="false"
-                      CachingStrategy="RetainElement">
+                      HasUnevenRows="true"
+                      CachingStrategy="RecycleElement">
 
                 <ListView.GroupHeaderTemplate>
                     <DataTemplate>
